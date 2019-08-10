@@ -55,8 +55,8 @@ export default function BookingForm(props) {
   const classes = useStyles();
   const [town, setTown] = React.useState("");
   const [frequency, setFrequency] = React.useState("");
-  const [selectedDate, setSelectedDate] = React.useState(Date.now());
-  const [duration, setDuration] = React.useState(0);
+  const [selectedDate, setSelectedDate] = React.useState(Date.parse('2019-08-24T05:30:00+01:00'));
+  const [duration, setDuration] = React.useState(180);
 
 
 //   const [selectedDate, handleDateChange] = useState(new Date());
@@ -66,13 +66,15 @@ export default function BookingForm(props) {
     const endTime = moment(selectedDate).add(duration, "minutes")
     const rangeArray = [startTime, endTime]
     const bookingRequestTimeRange = moment.range(rangeArray)
-    const state = {}
-      state.town = town
-      state.frequency = frequency
-      state.duration = duration
-      state.bookingRequestTimeRange = bookingRequestTimeRange
+    const state = {
+      town,
+      frequency,
+      duration,
+      bookingRequestTimeRange,
+      start_time: startTime.toString()
+    }
 
-      props.storeBookingRequirements(state)
+    props.storeBookingRequirements(state)
   }
 
     // bookingRequestTimeRange.overlaps(bookingRequestTimeRange2) ? console.log("It overlaps! Choose another time") : console.log("it doesn't overlap, book away!") 

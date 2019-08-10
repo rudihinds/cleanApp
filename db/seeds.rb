@@ -7,7 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-Cleaning.destroy_all
+# Cleaning.destroy_all
+# Cleaner.destroy_all
+
 
 
 
@@ -24,6 +26,8 @@ Cleaning.destroy_all
     oven: Faker::Boolean,
     id_check: Faker::Boolean,
     user_id: Faker::Boolean,
+    image: Faker::Avatar.image,
+    avatar: Faker::Avatar.image(slug: "my-own-slug", size: "50x50")
 )
 end
 
@@ -42,7 +46,7 @@ end
     oven: Faker::Boolean,
     booked: Faker::Boolean,
     completed: Faker::Boolean,
-    cleaner_id: 52,
+    cleaner_id: 1,
     user_id: 1,
 )
 end

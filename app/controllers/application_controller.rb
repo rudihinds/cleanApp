@@ -22,7 +22,7 @@ class ApplicationController < ActionController::API
       if token && token != 'null'
         
           decoded_token = decode_token(token)
-          byebug
+          
           @current_user = User.find(decoded_token["user_id"])
       else 
           @current_user = nil

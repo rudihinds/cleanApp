@@ -4,7 +4,7 @@ class Api::V1::CleaningsController < ApplicationController
 
     def index
         cleanings = Cleaning.all
-        render json: { cleanings: cleanings } 
-
+        render json: cleanings 
     end
+
 end

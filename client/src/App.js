@@ -7,6 +7,9 @@ import SignUpForm from './components/SignUpForm'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Navbar from './components/Navbar'
 import BookingForm from './components/BookingForm';
+import moment from 'moment'
+import CardContainer from './components/CardContainer'
+
 
 
 
@@ -14,10 +17,19 @@ class App extends React.Component{
 
   state = {
     userLoggedIn: false,
-    bookingRequirements: null
+    bookingRequirements: null,
+    cleanings: [],
+    availableCleaners: []
   }
   
   componentDidMount(){
+
+    API.getCleanings()
+      .then(cleanings => {
+
+        this.setState({ cleanings: [...this.state.cleanings, ...cleanings] })
+      })
+
     // API.validateUser().then(user => {
     //   console.log(user)
     //   if (!user.error && user.id) this.setState({loggedIn: true, showModal: false})
@@ -37,15 +49,57 @@ class App extends React.Component{
   toggleUserLogIn = () => this.setState({ userLoggedIn: !this.state.userLoggedIn})
 
   storeBookingRequirements = (state) => {
-    API.getCleanings()
-    this.setState({ bookingRequirements: state })
-  }
 
+    API.getAvailableCleaners(state.start_time, state.duration)
+      .then(availableCleaners => this.setState({ availableCleaners }))
+
+    this.setState({ bookingRequirements: state })
+
+    let requestRange = state.bookingRequestTimeRange
+    let start_time = this.state.cleanings[0].start_time
+    let startTime = moment(start_time)
+    let endTime = moment(start_time).add(this.state.cleanings[0].duration, 'minutes')
+    const rangeArray = [startTime, endTime]
+
+    console.log("incoming range: ", requestRange, "db range: ", rangeArray)
+    
+    const bookingRequestTimeRange = moment.range(rangeArray)
+
+    requestRange.overlaps(bookingRequestTimeRange) ? console.log("it overlaps, choose another time") : console.log("it doesn't overlap, book away!")
+
+    // debugger
+    // console.log('start time:', startTime.toString())
+   
+
+    // console.log('end time: ', endTime.toString())
+    // console.log('three: ', time)
+
+    
+  }
+  
   render(){
 
     let userLoggedIn = this.state.userLoggedIn
-    console.log(this.state.bookingRequirements)
+    
+    // console.log(moment(cleaningTest.start_time))
+    // cleaningTest === undefined ? console.log("it is undefined") 
+    // : console.log(moment(cleaningTest.start_time))
 
+    
+
+    
+
+    // let cleaning = this.state.cleanings.filter(cleaning => cleaning.id === 27)
+    
+    // if (this.state.cleanings.cleanings != undefined) {
+    //   console.log(this.state.cleanings.cleanings[0])
+    // } else {
+    //   console.log('empty array!')
+    // }
+
+    // this.state.cleanings.cleanings[0] ? console.log(this.state.cleanings.cleanings[0]) : console.log("Not yet")
+    // console.log(this.state.bookingRequirements)
+    
     return (
       <div>
         <h1>The app component</h1>
@@ -64,6 +118,7 @@ class App extends React.Component{
         </div>
         <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} />
         <BookingForm storeBookingRequirements={this.storeBookingRequirements} />
+        <CardContainer />
         </BrowserRouter>
        
       </div>

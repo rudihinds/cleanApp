@@ -40,10 +40,21 @@ const getCustomers = () => {
 }
 
 const getCleanings = () => {
-    fetch(cleaningsUrl, { headers: constructHeaders() })
+    return fetch(cleaningsUrl, { headers: constructHeaders() })
     .then(resp => resp.json())
-    .then(console.log)
+    
 }
+
+const getAvailableCleaners = (datetime, duration) => fetch('http://localhost:3000/api/v1/cleaners/available', 
+{
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ datetime, duration })
+}
+).then(res => res.json())
 
 const signUp = user => fetch(usersUrl, { 
     method: 'POST',
@@ -100,5 +111,5 @@ export default {
     login,
     validateUser,
     clearToken,
-
+    getAvailableCleaners
 }
