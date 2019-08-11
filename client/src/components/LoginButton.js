@@ -52,10 +52,20 @@ function LoginButton(props) {
   
     const submitLoginForm = () => {
         let user = {email, password}
-        API.login(user)
-        props.toggleLoggedIn()
-        props.toggleUserLogIn()
-        setOpen(false)
+        API.login(user).then(userObj => {
+          if (userObj) {
+            console.log("treated as successful/user valid")
+            console.log(userObj)
+            props.toggleLoggedIn()
+            props.toggleUserLogIn()
+            props.addCurrentUser(userObj)
+            setOpen(false)
+          } else {
+            console.log("treated as unsuccessful/no user/data.errors")
+            alert("Login failed, please enter valid email and password")
+          }
+        })
+      
     }
 
 

@@ -55,6 +55,7 @@ const getAvailableCleaners = (datetime, duration) => fetch('http://localhost:300
   body: JSON.stringify({ datetime, duration })
 }
 ).then(res => res.json())
+//  .then(console.log)
 
 const signUp = user => fetch(usersUrl, { 
     method: 'POST',
@@ -81,10 +82,12 @@ const login = user => fetch(loginUrl, {
 }).then(jsonify).then(data => {
     if (data.errors) {
         console.log('errors: ', data.errors)
+        return data.errors
     } else {
         localStorage.setItem('token', data.token)
+
         console.log('user: ', data.user)
-        return {user: data.user}
+        return data.user
     }
 }).catch(handleServerError)
 
@@ -100,6 +103,19 @@ const validateUser = () => {
         .catch(handleServerError)
 }
 
+const createCleaning = (cleaning) => {
+    fetch(cleaningsUrl, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ cleaning })
+    }).then(resp => resp.json())
+      .then(console.log)
+}
+
+
 const clearToken = () => localStorage.removeItem('token')
 
 export default {
@@ -111,5 +127,6 @@ export default {
     login,
     validateUser,
     clearToken,
-    getAvailableCleaners
+    getAvailableCleaners,
+    createCleaning
 }

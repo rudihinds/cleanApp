@@ -8,7 +8,7 @@ import LoginControl from './LoginControl'
 
 
 
-const Navbar = ({userLoggedIn, toggleModal, userLogIn, userLogOut, toggleUserLogIn}) => {
+const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUserLogIn, removeCurrentUser}) => {
     
     
   const [open, setOpen] = React.useState(false);
@@ -39,7 +39,7 @@ const Navbar = ({userLoggedIn, toggleModal, userLogIn, userLogOut, toggleUserLog
    
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar>   
-          <LoginControl toggleUserLogIn={toggleUserLogIn} />
+          <LoginControl toggleUserLogIn={toggleUserLogIn} addCurrentUser={addCurrentUser} removeCurrentUser={removeCurrentUser}/>
         <Link to='/' className={classes.title}><h2>UmmyCleans</h2></Link>
       </Toolbar>
     </AppBar>

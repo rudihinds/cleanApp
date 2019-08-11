@@ -28,6 +28,7 @@ function LogoutButton(props) {
         API.clearToken();
         props.toggleLoggedIn()
         props.toggleUserLogIn()
+        props.removeCurrentUser()
 
         
     //   setOpen(true);

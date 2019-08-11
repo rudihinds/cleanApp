@@ -17,6 +17,7 @@ class App extends React.Component{
 
   state = {
     userLoggedIn: false,
+    currentUser: null,
     bookingRequirements: null,
     cleanings: [],
     availableCleaners: []
@@ -48,11 +49,14 @@ class App extends React.Component{
 
   toggleUserLogIn = () => this.setState({ userLoggedIn: !this.state.userLoggedIn})
 
+  addCurrentUser = currentUser => this.setState({ currentUser }) 
+
+  removeCurrentUser = () => this.setState({ currentUser: null })
+
   storeBookingRequirements = (state) => {
 
     API.getAvailableCleaners(state.start_time, state.duration)
       .then(availableCleaners => this.setState({ availableCleaners }))
-
     this.setState({ bookingRequirements: state })
 
     let requestRange = state.bookingRequestTimeRange
@@ -73,8 +77,29 @@ class App extends React.Component{
 
     // console.log('end time: ', endTime.toString())
     // console.log('three: ', time)
-
     
+  }
+
+  processBooking = (cleaner_id, newBooking) => {
+    const cleaning = {
+      cleaner_id: cleaner_id,
+      user_id: this.state.currentUser.id,
+      address_one: newBooking.address_one,
+      adress_two: newBooking.address_two,
+      hourly_rate: newBooking.hourly_rate,
+      postcode: newBooking.postcode,
+      total_cost: newBooking.total_cost,
+      start_time: this.state.bookingRequirements.bookingRequestTimeRange.start.toString().slice(0, -9),
+      end_time: this.state.bookingRequirements.bookingRequestTimeRange.end.toString().slice(0, -9),
+      duration: this.state.bookingRequirements.duration,
+      location: this.state.bookingRequirements.town
+    }
+    API.createCleaning(cleaning)
+    
+    console.log(cleaning)
+    // console.log(newBooking)
+    // console.log(this.state.currentUser)
+
   }
   
   render(){
@@ -116,9 +141,9 @@ class App extends React.Component{
               }
           
         </div>
-        <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} />
+        <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} />
         <BookingForm storeBookingRequirements={this.storeBookingRequirements} />
-        <CardContainer />
+        <CardContainer availableCleaners={this.state.availableCleaners} booking={this.state.bookingRequirements} processBooking={this.processBooking} currentUser={this.state.currentUser}/>
         </BrowserRouter>
        
       </div>

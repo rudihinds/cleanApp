@@ -20,9 +20,9 @@ class LoginControl extends React.Component {
       let button;
   
       if (isLoggedIn) {
-        button = <LogoutButton toggleLoggedIn={this.toggleLoggedIn} toggleUserLogIn={this.props.toggleUserLogIn} />;
+        button = <LogoutButton toggleLoggedIn={this.toggleLoggedIn} toggleUserLogIn={this.props.toggleUserLogIn} removeCurrentUser={this.props.removeCurrentUser} />;
       } else {
-        button = <LoginButton toggleLoggedIn={this.toggleLoggedIn} toggleUserLogIn={this.props.toggleUserLogIn} />;
+        button = <LoginButton toggleLoggedIn={this.toggleLoggedIn} toggleUserLogIn={this.props.toggleUserLogIn } addCurrentUser={this.props.addCurrentUser} />;
       }
   
       return (

@@ -21,49 +21,32 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SpacingGrid() {
+export default function CardContainer(props) {
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
 
-  function handleChange(event, value) {
-    setSpacing(Number(value));
-  }
+  // function handleChange(event, value) {
+  //   setSpacing(Number(value));
+  // }
 
   return (
     <Grid container className={classes.root} spacing={2}>
-      <Grid item xs={6}>
-        <Grid container justify="center" spacing={spacing}>
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value => (
-            <Grid key={value} item>
-              <CleanerCard />
-            </Grid>
-          ))}
+      <Grid item xs={9} justify="center">
+        <Grid container spacing={3} >      
+            {
+              props.availableCleaners.map(cleaner => 
+                <Grid item >
+                <CleanerCard cleaner={cleaner} booking={props.booking} processBooking={props.processBooking} currentUser={props.currentUser}/>
+                </Grid>
+              )
+            }
+            
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-          <CleanerCard />
+      <Grid item xs={8}>
+          <h1> pointless thing </h1>
         <Paper className={classes.control}>
-          <Grid container>
-            <Grid item>
-              <FormLabel>spacing</FormLabel>
-              <RadioGroup
-                name="spacing"
-                aria-label="spacing"
-                value={spacing.toString()}
-                onChange={handleChange}
-                row
-              >
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value => (
-                  <FormControlLabel
-                    key={value}
-                    value={value.toString()}
-                    control={<Radio />}
-                    label={value.toString()}
-                  />
-                ))}
-              </RadioGroup>
-            </Grid>
-          </Grid>
+          Footer?
         </Paper>
       </Grid>
     </Grid>
