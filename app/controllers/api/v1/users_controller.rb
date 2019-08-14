@@ -11,6 +11,17 @@ class Api::V1::UsersController < ApplicationController
       end
     end
 
+    def my_cleanings
+      user = User.find_by(id: params[:id])
+      cleanings = user.cleanings
+      if cleanings
+          render json: cleanings, :include => :cleaner
+      else
+          render json: { errors: cleanings.errors.full_messages }, status: :not_accepted
+      end
+      
+    end
+
     def index
         users = User.all
         render json: users

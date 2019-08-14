@@ -44,9 +44,9 @@ export default function CardContainer(props) {
         </Grid>
       </Grid>
       <Grid item xs={8}>
-          <h1> pointless thing </h1>
+          
         <Paper className={classes.control}>
-          Footer?
+        
         </Paper>
       </Grid>
     </Grid>

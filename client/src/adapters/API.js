@@ -45,6 +45,22 @@ const getCleanings = () => {
     
 }
 
+const getMyCleanings = (user_id) => {
+    return fetch(`${usersUrl}/${user_id}/cleanings`, { headers: constructHeaders() })
+    .then(resp => resp.json())
+}
+
+const deleteCleaning = (cleaningId) => {
+    return fetch(`${cleaningsUrl}/${cleaningId}`, {
+        method: 'DELETE',
+        headers: constructHeaders({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        })
+    })
+        .then(jsonify)
+}
+
 const getAvailableCleaners = (datetime, duration) => fetch('http://localhost:3000/api/v1/cleaners/available', 
 {
   method: 'POST',
@@ -128,5 +144,7 @@ export default {
     validateUser,
     clearToken,
     getAvailableCleaners,
-    createCleaning
+    createCleaning,
+    getMyCleanings,
+    deleteCleaning
 }

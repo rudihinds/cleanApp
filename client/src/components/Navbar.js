@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import API from '../adapters/API'
 import LoginControl from './LoginControl'
+import { NavLink } from 'react-router-dom'
 
 
 
-const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUserLogIn, removeCurrentUser}) => {
+const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUserLogIn, removeCurrentUser, user}) => {
     
     
   const [open, setOpen] = React.useState(false);
@@ -27,6 +27,14 @@ const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUse
     }
   }));
 
+  const link = {
+    width: '100px',
+    // padding: '12px',
+    margin: '0 6px 6px',
+    textDecoration: 'none',
+    color: 'white',
+  }
+
 
   const classes = useStyles();
 
@@ -38,9 +46,11 @@ const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUse
   return (
    
     <AppBar position="fixed" className={classes.appBar}>
-      <Toolbar>   
-          <LoginControl toggleUserLogIn={toggleUserLogIn} addCurrentUser={addCurrentUser} removeCurrentUser={removeCurrentUser}/>
-        <Link to='/' className={classes.title}><h2>UmmyCleans</h2></Link>
+      <Toolbar> 
+        <NavLink to="/new-booking" style={link}>New Booking</NavLink>  
+        { userLoggedIn ? <NavLink to="/users/:id/cleanings" style={link}>My Bookings</NavLink> : null }
+        { !userLoggedIn ? <NavLink to="/signup" style={link}>Sign Up</NavLink> : null }
+        <LoginControl toggleUserLogIn={toggleUserLogIn} addCurrentUser={addCurrentUser} removeCurrentUser={removeCurrentUser}/>
       </Toolbar>
     </AppBar>
    
@@ -48,3 +58,12 @@ const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUse
 }
 
 export default Navbar;
+
+  // <Link to='/' className={classes.title}>UmmyCleans</Link> */}
+        //  <NavLink to={`/MyBookings/${user.id}`} */}
+        // // exact
+        // style={link}
+        // activeStyle={{
+        //     background:'darkblue'
+        // }}
+        // >My Bookings</NavLink> 

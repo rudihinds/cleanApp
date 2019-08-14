@@ -1,6 +1,5 @@
 import React from 'react'
 import API from './adapters/API'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Dialog from '@material-ui/core/Dialog';
 import LoginForm from './components/SignUpForm'
 import SignUpForm from './components/SignUpForm'
@@ -9,9 +8,8 @@ import Navbar from './components/Navbar'
 import BookingForm from './components/BookingForm';
 import moment from 'moment'
 import CardContainer from './components/CardContainer'
-
-
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import MyBookings from './components/MyBookings'
 
 class App extends React.Component{
 
@@ -28,13 +26,9 @@ class App extends React.Component{
     API.getCleanings()
       .then(cleanings => {
 
-        this.setState({ cleanings: [...this.state.cleanings, ...cleanings] })
+        this.setState({ cleanings: [...this.state.cleanings, cleanings] })
       })
 
-    // API.validateUser().then(user => {
-    //   console.log(user)
-    //   if (!user.error && user.id) this.setState({loggedIn: true, showModal: false})
-    // })
   }
 
   toggleModal = () => this.setState({showModal: !this.state.showModal});
@@ -70,13 +64,6 @@ class App extends React.Component{
     const bookingRequestTimeRange = moment.range(rangeArray)
 
     requestRange.overlaps(bookingRequestTimeRange) ? console.log("it overlaps, choose another time") : console.log("it doesn't overlap, book away!")
-
-    // debugger
-    // console.log('start time:', startTime.toString())
-   
-
-    // console.log('end time: ', endTime.toString())
-    // console.log('three: ', time)
     
   }
 
@@ -95,8 +82,9 @@ class App extends React.Component{
       location: this.state.bookingRequirements.town
     }
     API.createCleaning(cleaning)
+      
     
-    console.log(cleaning)
+    // console.log(cleaning)
     // console.log(newBooking)
     // console.log(this.state.currentUser)
 
@@ -106,46 +94,22 @@ class App extends React.Component{
 
     let userLoggedIn = this.state.userLoggedIn
     
-    // console.log(moment(cleaningTest.start_time))
-    // cleaningTest === undefined ? console.log("it is undefined") 
-    // : console.log(moment(cleaningTest.start_time))
-
-    
-
-    
-
-    // let cleaning = this.state.cleanings.filter(cleaning => cleaning.id === 27)
-    
-    // if (this.state.cleanings.cleanings != undefined) {
-    //   console.log(this.state.cleanings.cleanings[0])
-    // } else {
-    //   console.log('empty array!')
-    // }
-
-    // this.state.cleanings.cleanings[0] ? console.log(this.state.cleanings.cleanings[0]) : console.log("Not yet")
-    // console.log(this.state.bookingRequirements)
-    
     return (
       <div>
-        <h1>The app component</h1>
-        <BrowserRouter>
-        <CssBaseline />
-        <div id='modal-to-top' >         
-              {userLoggedIn ? 
-              // if the state is set to true then we need to show login, this is set by user clicking login
-              <Dialog>
-                <LoginForm userLogIn={this.toggleUserLogin} toggleModal={this.toggleModal} handleLogIn={this.userLogIn} />
-              </Dialog>
-              : null
-
-              }
-          
-        </div>
         <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} />
-        <BookingForm storeBookingRequirements={this.storeBookingRequirements} />
+        <br />
+        <br />
+        <br />
+        <br />
+        <Switch>
+          <Route exact path='/new-booking' render={() => <BookingForm storeBookingRequirements={this.storeBookingRequirements} />} />
+          <Route exact path={`/users/${this.state.currentUser.id}/cleanings`} render={() => <MyBookings user={this.state.currentUser}/>} />
+          <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser}/>} />
+          <Route exact path="/new-booking" render={() => <App user={this.state.currentUser}/>} />
+
+
+        </Switch>
         <CardContainer availableCleaners={this.state.availableCleaners} booking={this.state.bookingRequirements} processBooking={this.processBooking} currentUser={this.state.currentUser}/>
-        </BrowserRouter>
-       
       </div>
     )
   }
@@ -153,21 +117,5 @@ class App extends React.Component{
 
 export default App;
 
-        /* {<Switch>
-          <Route exact path='/' component={(props) => <Sidebar {...props} displayType='all' loggedIn={this.state.loggedIn} />} />
 
-          <Route path='/search-results' component={(props) => <Sidebar {...props} displayType='search' loggedIn={this.state.loggedIn} />} />
-          
-          <PrivateRoute 
-            loggedIn={this.state.loggedIn} 
-            component={(props) => <Sidebar {...props} displayType='user' loggedIn={this.state.loggedIn} />} 
-            path='/my-headlines' exact 
-          />
-
-          <PrivateRoute 
-            loggedIn={this.state.loggedIn} 
-            component={(props) => <Sidebar {...props} loggedIn={this.state.loggedIn}/>} 
-            path='/user-sources' exact 
-          />
-
-         </Switch>} */
+                

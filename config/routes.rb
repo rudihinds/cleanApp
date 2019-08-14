@@ -12,6 +12,10 @@ Rails.application.routes.draw do
         get '/cleaners/available', to: 'cleaners#available'
         post '/login', to: 'auth#create'
         get '/validate', to: 'auth#validate'
+        get '/users/:id/cleanings', to: 'users#my_cleanings'
+        
+
+        # get '/${:id}/cleanings', to: 'cleanings#show'
     end
   end
 
