@@ -21,7 +21,7 @@ import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
-
+import CardContainer from './CardContainer'
 
 // import React, { Fragment, useState } from "react";
 // import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
@@ -75,6 +75,7 @@ export default function BookingForm(props) {
     }
 
     props.storeBookingRequirements(state)
+    console.log(state)
   }
 
     // bookingRequestTimeRange.overlaps(bookingRequestTimeRange2) ? console.log("It overlaps! Choose another time") : console.log("it doesn't overlap, book away!") 
@@ -122,6 +123,7 @@ export default function BookingForm(props) {
   
 
   return (
+    <>
     <form className={classes.root} autoComplete="off">
         {/* dropdown for choosing your town */}
       <FormControl variant="outlined" className={classes.formControl}>
@@ -226,5 +228,8 @@ export default function BookingForm(props) {
       </Fab>
       </FormControl>
     </form>
+        <CardContainer availableCleaners={props.availableCleaners} booking={props.bookingRequirements} storeBookingRequirements={props.storeBookingRequirements} processBooking={props.processBooking} currentUser={props.currentUser} storeSelectedCleaner={props.storeSelectedCleaner}/>
+                
+          </>
   );
 }

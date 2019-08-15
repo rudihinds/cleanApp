@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom'
 
 
 
-const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUserLogIn, removeCurrentUser, user}) => {
+const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUserLogIn, removeCurrentUser, currentUser}) => {
     
     
   const [open, setOpen] = React.useState(false);
@@ -48,7 +48,7 @@ const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUse
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar> 
         <NavLink to="/new-booking" style={link}>New Booking</NavLink>  
-        { userLoggedIn ? <NavLink to="/users/:id/cleanings" style={link}>My Bookings</NavLink> : null }
+        { currentUser ? <NavLink to={`/users/${currentUser.id}/cleanings`} style={link}>My Bookings</NavLink> : null }
         { !userLoggedIn ? <NavLink to="/signup" style={link}>Sign Up</NavLink> : null }
         <LoginControl toggleUserLogIn={toggleUserLogIn} addCurrentUser={addCurrentUser} removeCurrentUser={removeCurrentUser}/>
       </Toolbar>

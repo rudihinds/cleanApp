@@ -36,7 +36,7 @@ export default function CardContainer(props) {
             {
               props.availableCleaners.map(cleaner => 
                 <Grid item >
-                <CleanerCard cleaner={cleaner} booking={props.booking} processBooking={props.processBooking} currentUser={props.currentUser}/>
+                <CleanerCard cleaner={cleaner} booking={props.booking} storeBookingRequirements={props.storeBookingRequirements} processBooking={props.processBooking} currentUser={props.currentUser} storeSelectedCleaner={props.storeSelectedCleaner}/>
                 </Grid>
               )
             }

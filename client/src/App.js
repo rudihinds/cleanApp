@@ -10,12 +10,14 @@ import moment from 'moment'
 import CardContainer from './components/CardContainer'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import MyBookings from './components/MyBookings'
+import ConfirmDetailsPage from './components/ConfirmDetailsPage'
 
 class App extends React.Component{
 
   state = {
     userLoggedIn: false,
     currentUser: null,
+    selectedCleaner: null,
     bookingRequirements: null,
     cleanings: [],
     availableCleaners: []
@@ -46,6 +48,10 @@ class App extends React.Component{
   addCurrentUser = currentUser => this.setState({ currentUser }) 
 
   removeCurrentUser = () => this.setState({ currentUser: null })
+
+  storeSelectedCleaner = (selectedCleaner) => this.setState({ selectedCleaner })
+  // storeSelectedCleaner = (selectedCleaner) => console.log(selectedCleaner, selectedCleaner.id)
+
 
   storeBookingRequirements = (state) => {
 
@@ -96,20 +102,20 @@ class App extends React.Component{
     
     return (
       <div>
-        <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} />
+        <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} currentUser={this.state.currentUser} />
         <br />
         <br />
         <br />
         <br />
         <Switch>
-          <Route exact path='/new-booking' render={() => <BookingForm storeBookingRequirements={this.storeBookingRequirements} />} />
-          <Route exact path={`/users/${this.state.currentUser.id}/cleanings`} render={() => <MyBookings user={this.state.currentUser}/>} />
-          <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser}/>} />
-          <Route exact path="/new-booking" render={() => <App user={this.state.currentUser}/>} />
-
-
+            <Route exact path='/new-booking' render={() => <BookingForm availableCleaners={this.state.availableCleaners} bookingRequirements={this.state.bookingRequirements} storeBookingRequirements={this.storeBookingRequirements} currentUser={this.state.currentUser} processBooking={this.processBooking} storeSelectedCleaner={this.storeSelectedCleaner} />} />
+          { this.state.currentUser ?
+            <Route exact path="/users/cleanings" render={() => <MyBookings user={this.state.currentUser}/>} />
+          : null }
+            <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser}/>} />
+            <Route exact path="/new-booking" render={() => <App/>} />
+            <Route exact path="/checkout" render={() => <ConfirmDetailsPage selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} />} />
         </Switch>
-        <CardContainer availableCleaners={this.state.availableCleaners} booking={this.state.bookingRequirements} processBooking={this.processBooking} currentUser={this.state.currentUser}/>
       </div>
     )
   }

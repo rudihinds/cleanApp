@@ -15,6 +15,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle'
 import moment from 'moment'
 import Avatar from '@material-ui/core/Avatar';
+import { NavLink } from 'react-router-dom'
 
 const useStyles = makeStyles({
   card: {
@@ -50,6 +51,11 @@ export default function CleanerCard(props) {
 
   function handleClose() {
     setOpen(false);
+  }
+
+  const handleClick = () => {
+    props.storeSelectedCleaner(props.cleaner)
+
   }
 
 
@@ -102,9 +108,13 @@ export default function CleanerCard(props) {
         <Button size="small" color="primary" >
           See Reviews
         </Button>
-        <Button size="small" color="primary" onClick={handleClickOpen}>
+        {/* <Button size="small" color="primary" onClick={handleClickOpen}> */}
+        <NavLink to="/checkout">
+          <Button size="small" color="primary" onClick={handleClick}>
           Book Cleaner
-        </Button>
+          </Button>
+        </NavLink> 
+        
       </CardActions>
     </Card>
 
