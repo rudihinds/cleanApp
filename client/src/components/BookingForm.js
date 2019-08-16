@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
+    justifyContent: 'center'
   },
   formControl: {
     margin: theme.spacing(1),
@@ -228,7 +229,7 @@ export default function BookingForm(props) {
       </Fab>
       </FormControl>
     </form>
-        <CardContainer availableCleaners={props.availableCleaners} booking={props.bookingRequirements} storeBookingRequirements={props.storeBookingRequirements} processBooking={props.processBooking} currentUser={props.currentUser} storeSelectedCleaner={props.storeSelectedCleaner}/>
+        <CardContainer filterByMinimumCleans={props.filterByMinimumCleans} filterByRating={props.filterByRating} filterByPrice={props.filterByPrice} availableCleaners={props.availableCleaners} booking={props.bookingRequirements} storeBookingRequirements={props.storeBookingRequirements} processBooking={props.processBooking} currentUser={props.currentUser} storeSelectedCleaner={props.storeSelectedCleaner}/>
                 
           </>
   );

@@ -20,9 +20,14 @@ class App extends React.Component{
     selectedCleaner: null,
     bookingRequirements: null,
     cleanings: [],
-    availableCleaners: []
+    availableCleaners: [],
+    priceFilterRange: [],
+    ratingFilterRange: [],
+    minimumCleansFilterRange: []
   }
   
+
+
   componentDidMount(){
 
     API.getCleanings()
@@ -52,13 +57,53 @@ class App extends React.Component{
   storeSelectedCleaner = (selectedCleaner) => this.setState({ selectedCleaner })
   // storeSelectedCleaner = (selectedCleaner) => console.log(selectedCleaner, selectedCleaner.id)
 
+  filterByPrice = (newValue) => {
+    this.setState({priceFilterRange: newValue})
+  }
+
+  filterByRating = (newValue) => {
+    this.setState({ratingFilterRange: newValue})
+  }
+
+  filterByMinimumCleans = (newValue) => {
+    this.setState({minimumCleansFilterRange: newValue})
+  }
+
+  getCleanersWithinPriceRange = (range) => this.state.availableCleaners.filter(cleaner => {
+    return (cleaner.hourly_rate >= range[0] && cleaner.hourly_rate <= range[1])
+  })
+
+  getCleanersWithinRatingRange = (range, arr) => arr.filter(cleaner => {
+    return (cleaner.average_rating >= range[0] && cleaner.total_cleans <= range[1])
+  })
+
+  getCleanersWithinMinimumCleansRange = (range, arr) => arr.filter(cleaner => {
+    return (cleaner.total_cleans >= range[0] && cleaner.total_cleans <= range[1])
+  })
+
+
+
+  arrayUnique = (array) => {
+    var a = array.concat()
+      for(let i=0; i<a.length; ++i) {
+        for(let j=i+1; j<a.length; ++j) {
+          if(a[i] === a[j])
+            a.splice(j--, 1)
+        }
+      }
+      a = a.filter(item => typeof item === 'number')
+      return a
+    }
+
+  
 
   storeBookingRequirements = (state) => {
 
     API.getAvailableCleaners(state.start_time, state.duration)
-      .then(availableCleaners => this.setState({ availableCleaners }))
-    this.setState({ bookingRequirements: state })
+      .then(availableCleaners => this.setState({ availableCleaners, cleanersToRender: availableCleaners.map(cleaner => cleaner.id) }))
 
+
+    this.setState({ bookingRequirements: state })
     let requestRange = state.bookingRequestTimeRange
     let start_time = this.state.cleanings[0].start_time
     let startTime = moment(start_time)
@@ -97,8 +142,20 @@ class App extends React.Component{
   }
   
   render(){
+    console.log(this.state.priceFilterRange, this.state.ratingFilterRange, this.state.minimumCleansFilterRange)
+    const arr1 = this.getCleanersWithinPriceRange(this.state.priceFilterRange)
+    console.log(arr1)
+    const arr2 = this.getCleanersWithinRatingRange(this.state.ratingFilterRange, arr1)
+    console.log(arr2)
 
+    const arr3 = this.getCleanersWithinMinimumCleansRange(this.state.minimumCleansFilterRange, arr2)
+    console.log(arr3)
+
+
+    // let test = this.getCleanersWithinPriceRange()
     let userLoggedIn = this.state.userLoggedIn
+    let cleanersToRender = this.state.availableCleaners.filter(cleaner => this.state.cleanersToRender.includes(cleaner.id))
+   
     
     return (
       <div>
@@ -108,13 +165,13 @@ class App extends React.Component{
         <br />
         <br />
         <Switch>
-            <Route exact path='/new-booking' render={() => <BookingForm availableCleaners={this.state.availableCleaners} bookingRequirements={this.state.bookingRequirements} storeBookingRequirements={this.storeBookingRequirements} currentUser={this.state.currentUser} processBooking={this.processBooking} storeSelectedCleaner={this.storeSelectedCleaner} />} />
+            <Route exact path='/new-booking' render={() => <BookingForm filterByMinimumCleans={this.filterByMinimumCleans} filterByRating={this.filterByRating} filterByPrice={this.filterByPrice} availableCleaners={arr3} bookingRequirements={this.state.bookingRequirements} storeBookingRequirements={this.storeBookingRequirements} currentUser={this.state.currentUser} processBooking={this.processBooking} storeSelectedCleaner={this.storeSelectedCleaner} />} />
           { this.state.currentUser ?
             <Route exact path="/users/cleanings" render={() => <MyBookings user={this.state.currentUser}/>} />
           : null }
             <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser}/>} />
             <Route exact path="/new-booking" render={() => <App/>} />
-            <Route exact path="/checkout" render={() => <ConfirmDetailsPage selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} />} />
+            <Route exact path="/checkout" render={(rudiProps) => <ConfirmDetailsPage rudiProps={rudiProps} selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} currentUser={this.state.currentUser} />} />
         </Switch>
       </div>
     )

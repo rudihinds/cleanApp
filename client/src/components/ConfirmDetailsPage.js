@@ -12,42 +12,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ConfirmDetailsPage(props) {
-
-    // redirectPage = () =>{
-    //     if(!this.state.userLoggedIn){
-    //       this.history.push(("/some/Path")
-    //     }
-    //   }
+function ConfirmDetailsPage({currentUser, selectedCleaner, bookingRequirements, rudiProps}) {
 
   useEffect(() => {
-    if (!((currentUser) && (cleaner) && (bookingRequirements))) {
-        // history.push('.new-booking')
-        console.log("the gang is here!!!")
-
+    debugger
+    if (!((currentUser) && (selectedCleaner) && (bookingRequirements))) {
+        rudiProps.history.push('new-booking')
+        console.log("the gang is not here!!!")
     } else {
         console.log("the gang is here!!!")
         }
   }, [])
 
-//   const [currentUser, setCurrentUser] = React.useState({id: 1});
-  const [currentUser, setCurrentUser] = React.useState(null);
-
-  const [cleaner, setCleaner] = React.useState({
-      id: 1, 
-      first_name: "Carmina", 
-      last_name: "Murazik", 
-      hourly_rate: 15, 
-      image: "https://robohash.org/possimussitexpedita.png?size=..."});
-
-
-  const [bookingRequirements, setBookingRequirements] = React.useState({
-      town: "London", 
-      frequency: "Weekly", 
-      duration: 180, 
-      start_time: "Sat Aug 24 2019 05:30:00 GMT+0100"});
-
-
+  // const [currentUser, setCurrentUser] = React.useState({currentUser});
+  // const [selectedCleaner, setSelectedCleaner] = React.useState({selectedCleaner})
+  // const [bookingRequirements, setBookingRequirements] = React.useState({bookingRequirements})
   const classes = useStyles();
 
   return (
@@ -61,7 +40,7 @@ function ConfirmDetailsPage(props) {
         </Typography>
         <ProgressBar />
         <h1>Confirm Your Cleaning Address</h1>
-        <CleaningAddress currentUser={currentUser} cleaner={cleaner} bookingRequirements={bookingRequirements} />
+        <CleaningAddress currentUser={currentUser} cleaner={selectedCleaner} bookingRequirements={bookingRequirements}/>
         {/* <BookingSummary />  */}
       </Paper>
     </div>
@@ -71,5 +50,15 @@ function ConfirmDetailsPage(props) {
 
 export default withRouter(ConfirmDetailsPage);
 
+// id: 1, 
+      // first_name: "Carmina", 
+      // last_name: "Murazik", 
+      // hourly_rate: 15, 
+      // image: "https://robohash.org/possimussitexpedita.png?size=..."
+
+      // town: "London", 
+      // frequency: "Weekly", 
+      // duration: 180, 
+      // start_time: "Sat Aug 24 2019 05:30:00 GMT+0100"
 
 
