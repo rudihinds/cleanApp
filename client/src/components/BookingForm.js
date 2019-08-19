@@ -229,7 +229,7 @@ export default function BookingForm(props) {
       </Fab>
       </FormControl>
     </form>
-        <CardContainer filterByMinimumCleans={props.filterByMinimumCleans} filterByRating={props.filterByRating} filterByPrice={props.filterByPrice} availableCleaners={props.availableCleaners} booking={props.bookingRequirements} storeBookingRequirements={props.storeBookingRequirements} processBooking={props.processBooking} currentUser={props.currentUser} storeSelectedCleaner={props.storeSelectedCleaner}/>
+        <CardContainer priceFilter={props.priceFilterRange} ratingFilter={props.ratingFilterRange} minCleansFilter={props.minimumCleansFilterRange} filterByMinimumCleans={props.filterByMinimumCleans} filterByRating={props.filterByRating} filterByPrice={props.filterByPrice} availableCleaners={props.availableCleaners} booking={props.bookingRequirements} storeBookingRequirements={props.storeBookingRequirements} processBooking={props.processBooking} currentUser={props.currentUser} storeSelectedCleaner={props.storeSelectedCleaner}/>
                 
           </>
   );

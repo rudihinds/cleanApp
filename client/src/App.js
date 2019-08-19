@@ -11,6 +11,7 @@ import CardContainer from './components/CardContainer'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import MyBookings from './components/MyBookings'
 import ConfirmDetailsPage from './components/ConfirmDetailsPage'
+import Landing from './components/Landing'
 
 class App extends React.Component{
 
@@ -32,10 +33,22 @@ class App extends React.Component{
 
     API.getCleanings()
       .then(cleanings => {
-
-        this.setState({ cleanings: [...this.state.cleanings, cleanings] })
+        this.setState({ 
+          cleanings: [...this.state.cleanings, cleanings], 
+          priceFilterRange: [12, 20], 
+          ratingFilterRange: [1, 5],
+          minimumCleansFilterRange: [1, 50]
+         })
       })
-
+      // if (this.state.pricefilterRange === [] && this.state.pricefilterRange === [] && this.state.pricefilterRange === []) {
+        // this.setState({  
+        //   priceFilterRange: [12, 20], 
+        //   ratingFilterRange: [1, 5],
+        //   minimumCleansFilterRange: [1, 50]
+        // })
+      // } else {
+      //   return
+      // }
   }
 
   toggleModal = () => this.setState({showModal: !this.state.showModal});
@@ -74,7 +87,7 @@ class App extends React.Component{
   })
 
   getCleanersWithinRatingRange = (range, arr) => arr.filter(cleaner => {
-    return (cleaner.average_rating >= range[0] && cleaner.total_cleans <= range[1])
+    return (cleaner.average_rating >= range[0] && cleaner.average_rating <= range[1])
   })
 
   getCleanersWithinMinimumCleansRange = (range, arr) => arr.filter(cleaner => {
@@ -140,16 +153,24 @@ class App extends React.Component{
     // console.log(this.state.currentUser)
 
   }
+
+  getFilteredCleaners = () => this.state.availableCleaners.filter(cleaner => {
+    return (cleaner.hourly_rate >= this.state.priceFilterRange[0] && cleaner.hourly_rate <= this.state.priceFilterRange[1]) && 
+    (cleaner.average_rating >= this.state.ratingFilterRange[0] && cleaner.average_rating <= this.state.ratingFilterRange[1]) &&
+    (cleaner.total_cleans >= this.state.minimumCleansFilterRange[0] && cleaner.total_cleans <= this.state.minimumCleansFilterRange[1])
+  })
   
   render(){
-    console.log(this.state.priceFilterRange, this.state.ratingFilterRange, this.state.minimumCleansFilterRange)
-    const arr1 = this.getCleanersWithinPriceRange(this.state.priceFilterRange)
-    console.log(arr1)
-    const arr2 = this.getCleanersWithinRatingRange(this.state.ratingFilterRange, arr1)
-    console.log(arr2)
+    // console.log(this.state.priceFilterRange, this.state.ratingFilterRange, this.state.minimumCleansFilterRange)
 
-    const arr3 = this.getCleanersWithinMinimumCleansRange(this.state.minimumCleansFilterRange, arr2)
-    console.log(arr3)
+    const filteredCleaners = this.getFilteredCleaners()
+    // const arr1 = this.getCleanersWithinPriceRange(this.state.priceFilterRange)
+    // // console.log(arr1)
+    // const arr2 = this.getCleanersWithinRatingRange(this.state.ratingFilterRange, arr1)
+    // // console.log(arr2)
+
+    // const arr3 = this.getCleanersWithinMinimumCleansRange(this.state.minimumCleansFilterRange, arr2)
+    // console.log(arr3)
 
 
     // let test = this.getCleanersWithinPriceRange()
@@ -165,13 +186,15 @@ class App extends React.Component{
         <br />
         <br />
         <Switch>
-            <Route exact path='/new-booking' render={() => <BookingForm filterByMinimumCleans={this.filterByMinimumCleans} filterByRating={this.filterByRating} filterByPrice={this.filterByPrice} availableCleaners={arr3} bookingRequirements={this.state.bookingRequirements} storeBookingRequirements={this.storeBookingRequirements} currentUser={this.state.currentUser} processBooking={this.processBooking} storeSelectedCleaner={this.storeSelectedCleaner} />} />
+            <Route exact path='/new-booking' render={() => <BookingForm priceFilterRange={this.state.priceFilterRange} ratingFilterRange={this.state.ratingFilterRange} minimumCleansFilterRange={this.state.minimumCleansFilterRange} filterByMinimumCleans={this.filterByMinimumCleans} filterByRating={this.filterByRating} filterByPrice={this.filterByPrice} availableCleaners={filteredCleaners} bookingRequirements={this.state.bookingRequirements} storeBookingRequirements={this.storeBookingRequirements} currentUser={this.state.currentUser} processBooking={this.processBooking} storeSelectedCleaner={this.storeSelectedCleaner} />} />
           { this.state.currentUser ?
-            <Route exact path="/users/cleanings" render={() => <MyBookings user={this.state.currentUser}/>} />
+            <Route exact path="/users/:id/cleanings" render={() => <MyBookings user={this.state.currentUser}/>} />
           : null }
             <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser}/>} />
             <Route exact path="/new-booking" render={() => <App/>} />
-            <Route exact path="/checkout" render={(rudiProps) => <ConfirmDetailsPage rudiProps={rudiProps} selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} currentUser={this.state.currentUser} />} />
+            <Route exact path="/" render={() => <Landing />} />
+
+            <Route path="/checkout" render={(rudiProps) => <ConfirmDetailsPage rudiProps={rudiProps} selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} currentUser={this.state.currentUser} />} />
         </Switch>
       </div>
     )

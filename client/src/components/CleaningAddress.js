@@ -7,6 +7,12 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import moment from 'moment'
+import AddressForm from './AddressForm'
+import PaymentForm from './PaymentForm'
+// import PaymentFormTest from './PaymentFormTest'
+import 'react-credit-cards/lib/styles.scss'
+import CreditCardInput from 'react-credit-card-input';
+import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
 
 
 
@@ -14,9 +20,10 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginLeft: '-32px',
-    marginRight: 'auto',
+    // marginLeft: '-32px',
+    // marginRight: 'auto',
     direction: 'column',
+    justifyContent: 'center'
     // width: '70%'
   },
 
@@ -43,7 +50,7 @@ const useStyles = makeStyles(theme => ({
   summaryContainer: {
     border: 'solid 1px lightgrey',
     borderRadius: "4px",
-    marginLeft: "25px",
+    // marginLeft: "25px",
     padding: 0
 
   },
@@ -52,6 +59,7 @@ const useStyles = makeStyles(theme => ({
 
     width: '45%',
     alignItems: 'flex-start',
+  },
 
   textField: {
     marginLeft: theme.spacing(1),
@@ -66,131 +74,59 @@ const useStyles = makeStyles(theme => ({
   menu: {
     width: 200,
   },
-}}));
+  h3: {
+    fontColor: 'white'
+  }
+}));
 
-export default function CleaningAddress(props) {
+function CleaningAddress(props) {
+  console.log(props)
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled',
-    currency: 'EUR',
-  });
+  
 
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
-  };
+  // const handleChange = name => event => {
+  //   setValues({ ...values, [name]: event.target.value });
+  // };
 
   return (
     <Container className={classes.container}>
     <form className={classes.form} noValidate autoComplete="off">
-    {/* <Grid container spacing={1} direction="row" label="Hello" alignItems="flex-start" width="50%"> */}
 
-      {/* <TextField
-        id="outlined-name"
-        label="Name"
-        className={classes.textField}
-        value={values.name}
-        onChange={handleChange('name')}
-        margin="normal"
-        variant="outlined"
-        width="100%"
-      />
-      <TextField
-        id="outlined-uncontrolled"
-        label="Uncontrolled"
-        defaultValue="foo"
-        className={classes.textField}
-        margin="normal"
-        variant="outlined"
-      />
-      <TextField
-        id="outlined-dense"
-        label="Dense"
-        className={clsx(classes.textField, classes.dense)}
-        margin="dense"
-        variant="outlined"
-      />
-      <TextField
-        id="outlined-dense"
-        label="Dense"
-        className={clsx(classes.textField, classes.dense)}
-        margin="dense"
-        variant="outlined"
-      /> */}
-      <TextField
-        id="outlined-full-width"
-        label="First Name"
-        style={{ margin: 8 }}
-        placeholder="Placeholder"
-        className={classes.textField}        
-        maxWidth="50%"
-        // margin="normal"
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      <TextField
-        id="outlined-full-width"
-        label="Last Name"
-        style={{ margin: 8 }}
-        placeholder="Placeholder"
-        className={classes.textField}        
-        // maxWidth="100%"
-        // margin="normal"
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      <TextField
-        id="outlined-full-width"
-        label="Address One"
-        style={{ margin: 8 }}
-        placeholder="Placeholder"
-        // maxWidth="100%"
-        fullWidth
-        // margin="normal"
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-      <TextField
-        id="outlined-full-width"
-        label="Address Two"
-        style={{ margin: 8 }}
-        placeholder="Placeholder"
-        // maxWidth="100%"
-        fullWidth
-        // margin="normal"
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      /><TextField
-      id="outlined-full-width"
-      label="City"
-      style={{ margin: 8 }}
-      placeholder="Placeholder"
-      // maxWidth="100%"
-      fullWidth
-      // margin="normal"
-      variant="outlined"
-      InputLabelProps={{
-        shrink: true,
-      }}
-    />
+    {/* <Route exact path="/checkout" render={(rudiProps) => <ConfirmDetailsPage rudiProps={rudiProps} selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} currentUser={this.state.currentUser} />} /> */}
+
+    <Switch>
+    <Route path="/checkout/address-form" render={(rudiProps) => <AddressForm {...rudiProps} addressComponentShowing={props.addressComponentShowing} changeAddressFilledOut={props.changeAddressFilledOut} cleaner={props.cleaner} addressFilledOut={props.addressFilledOut}  />} />
     
-    <Button variant="contained" color="primary" className={classes.button} fullWidth>
-        Next
-      </Button>
+    {/* <AddressForm changeAddressFilledOut={props.changeAddressFilledOut} /> */}
+    <Route path="/checkout/payment-form" render={(rudiProps) => <PaymentForm {...rudiProps} paymentComponentShowing={props.paymentComponentShowing} changeAddressFilledOut={props.changeAddressFilledOut}  />} />
+    </Switch>
+
+    
+    {/* <PaymentForm /> */}
+
+  {/* <CreditCardInput
+    cardNumberInputProps={{ value: cardNumber, onChange: this.handleCardNumberChange }}
+    cardExpiryInputProps={{ value: expiry, onChange: this.handleCardExpiryChange }}
+    cardCVCInputProps={{ value: cvc, onChange: this.handleCardCVCChange }}
+    fieldClassName="input"
+    
+  /> */}
+    
+    {/* <PaymentFormTest
+      number={input.number.value}
+      name={input.name.value}
+      expiry={input.expiry.value}
+      cvc={input.cvc.value}
+      focused={state.focused}
+    /> */}
+
 
     {/* </Grid> */}
      
     </form>
     <div className={classes.div}>
+        {/* <h3 className={classes.h3}>* </h3> */}
+
       <Container className={classes.summaryContainer}>
           <Container className={classes.listItem}>
                 <h4>Your Booking Summary</h4>
@@ -228,7 +164,7 @@ export default function CleaningAddress(props) {
   );
 }
 
-
+export default withRouter(CleaningAddress)
 
 // import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -21,6 +22,7 @@ const useStyles = makeStyles({
   card: {
     maxWidth: 240,
     maxHeight: 250,
+    width: 200
   },
   avatar: {
     margin: 10,
@@ -83,7 +85,8 @@ export default function CleanerCard(props) {
 
   return (
 
-    <div>
+    
+    <Grid item className={classes.cardDiv} key={props.cleaner.id}>
     <Card className={classes.card}>
       <CardActionArea>
         <CardMedia
@@ -109,7 +112,7 @@ export default function CleanerCard(props) {
           See Reviews
         </Button>
         {/* <Button size="small" color="primary" onClick={handleClickOpen}> */}
-        <NavLink to="/checkout">
+        <NavLink to="/checkout/address-form">
           <Button size="small" color="primary" onClick={handleClick}>
           Book Cleaner
           </Button>
@@ -118,67 +121,69 @@ export default function CleanerCard(props) {
       </CardActions>
     </Card>
 
-<Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-<DialogTitle id="form-dialog-title">You Are Booking {props.cleaner.first_name}</DialogTitle>
-<DialogContent>
-  <Avatar alt="Remy Sharp" src={props.cleaner.image} className={classes.bigAvatar} />
-  <DialogContentText>
-    Date: {props.booking.start_time}
-    <br/>
-    Duration: {getDurationInHours()} hrs
-    <br/>
-    Frequency: {props.booking.frequency}
-    <br/>
-    hourly: £{props.cleaner.hourly_rate} per hour
-    <br/>
-  </DialogContentText>
-  <DialogContentText variant="h5" component="h5">
-   Total Cost: £{getTotalCost()}
-  </DialogContentText>
-
-  <TextField
-    autoFocus
-    margin="dense"
-    id="Address 1"
-    label="Address 1"
-    type="text"
-    fullWidth
-  />
-  <TextField
-    autoFocus
-    margin="dense"
-    id="Address 2"
-    label="Address 2"
-    type="text"
-    fullWidth
-  />
-  <TextField
-    autoFocus
-    margin="dense"
-    id="postcode"
-    label="Postcode"
-    type="text"
-    fullWidth
-  />
-  <TextField
-    autoFocus
-    margin="dense"
-    id="postcode"
-    label="Enter Card Number"
-    type="card"
-    fullWidth
-  />
-</DialogContent>
-<DialogActions>
-  <Button onClick={handleClose} color="primary">
-    Cancel
-  </Button>
-  <Button onClick={handleBooking} color="primary">
-    Pay Now
-  </Button>
-</DialogActions>
-</Dialog>
-</div>
+{
+  open && <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+  <DialogTitle id="form-dialog-title">You Are Booking {props.cleaner.first_name}</DialogTitle>
+  <DialogContent>
+    <Avatar alt="Remy Sharp" src={props.cleaner.image} className={classes.bigAvatar} />
+    <DialogContentText>
+      Date: {props.booking.start_time}
+      <br/>
+      Duration: {getDurationInHours()} hrs
+      <br/>
+      Frequency: {props.booking.frequency}
+      <br/>
+      hourly: £{props.cleaner.hourly_rate} per hour
+      <br/>
+    </DialogContentText>
+    <DialogContentText variant="h5" component="h5">
+     Total Cost: £{getTotalCost()}
+    </DialogContentText>
+  
+    <TextField
+      autoFocus
+      margin="dense"
+      id="Address 1"
+      label="Address 1"
+      type="text"
+      fullWidth
+    />
+    <TextField
+      autoFocus
+      margin="dense"
+      id="Address 2"
+      label="Address 2"
+      type="text"
+      fullWidth
+    />
+    <TextField
+      autoFocus
+      margin="dense"
+      id="postcode"
+      label="Postcode"
+      type="text"
+      fullWidth
+    />
+    <TextField
+      autoFocus
+      margin="dense"
+      id="postcode"
+      label="Enter Card Number"
+      type="card"
+      fullWidth
+    />
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleClose} color="primary">
+      Cancel
+    </Button>
+    <Button onClick={handleBooking} color="primary">
+      Pay Now
+    </Button>
+  </DialogActions>
+  </Dialog>
+}
+</Grid>
 
   );
 }

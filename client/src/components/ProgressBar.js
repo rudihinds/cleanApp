@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -121,10 +121,18 @@ function getStepContent(step) {
   }
 }
 
-export default function CustomizedSteppers() {
+export default function ProgressBar(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(1);
+  // const [addressFilledOut, setAddressFilledOut] = React.useState(props.addressFilledOut);
+
+  useEffect(() => {
+     props.addressFilledOut ? setActiveStep(2) : setActiveStep(1)
+  });
+
   const steps = getSteps();
+
+
 
   function handleNext() {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -138,7 +146,16 @@ export default function CustomizedSteppers() {
     setActiveStep(0);
   }
 
+  // const readState = () => {
+  //   props.addressFilledOut ? setActiveStep(prevActiveStep => prevActiveStep + 1) 
+  //     : 
+  //   setActiveStep(prevActiveStep => prevActiveStep - 1)
+  // }
+
+
   return (
+  
+  
     <div className={classes.root}>
       <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
         {steps.map(label => (
@@ -159,7 +176,7 @@ export default function CustomizedSteppers() {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            {/* <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography> */}
             <div>
               {/* <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Back

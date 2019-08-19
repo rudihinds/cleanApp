@@ -68,10 +68,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CardContainer(props) {
-  const [spacing, setSpacing] = React.useState(2);
-  const [priceFilter, setPriceFilter] = React.useState([12, 15]);
+  // const [spacing, setSpacing] = React.useState(2);
+  const [priceFilter, setPriceFilter] = React.useState([12, 20]);
   const [reviewFilter, setReviewFilter] = React.useState([1, 5]);
-  const [minCleansFilter, setMinCleansFilter] = React.useState([1, 15]);
+  const [minCleansFilter, setMinCleansFilter] = React.useState([1, 50]);
 
   const classes = useStyles();
 
@@ -81,18 +81,18 @@ export default function CardContainer(props) {
 
   const handlePriceFilterChange = (event, newValue) => {
     setPriceFilter(newValue)
-    props.filterByPrice(newValue)
+    // props.filterByPrice(newValue)
   };
 
   const handleReviewFilterChange = (event, newValue) => {
     setReviewFilter(newValue);
-    props.filterByRating(newValue)
+    // props.filterByRating(newValue)
 
   };
 
   const handleMinCleansChange = (event, newValue) => {
     setMinCleansFilter(newValue);
-    props.filterByMinimumCleans(newValue)
+    // props.filterByMinimumCleans(newValue)
 
   };
 
@@ -111,7 +111,7 @@ export default function CardContainer(props) {
       {/* filter container begins */}
       <div className={classes.filterContainer}>
       <div className={classes.listItem}>
-                <h4 className={classes.pTag}>Filter: X cleaners available</h4>
+                <h4 className={classes.pTag}>Filter: {props.availableCleaners.length} cleaners available</h4>
           </div>
 
       {/* price change slider item */}
@@ -120,12 +120,13 @@ export default function CardContainer(props) {
             <div className={classes.sliderRoot}>
       <Slider
         value={priceFilter}
+        onChangeCommitted={(e, newValue) => props.filterByPrice(newValue)}
         onChange={handlePriceFilterChange}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={valuetext}
         // marks={marks}
-        defaultValue={[12, 15]}
+        defaultValue={[12, 20]}
         min={12}
         max={20}
       />
@@ -139,11 +140,12 @@ export default function CardContainer(props) {
       <Slider
         value={reviewFilter}
         onChange={handleReviewFilterChange}
+        onChangeCommitted={(e, newValue) => props.filterByRating(newValue)}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={valuetext}
         marks={reviewMarks}
-        defaultValue={[12, 15]}
+        defaultValue={[1, 5]}
         min={1}
         max={5}
       />
@@ -157,11 +159,12 @@ export default function CardContainer(props) {
       <Slider
         value={minCleansFilter}
         onChange={handleMinCleansChange}
+        onChangeCommitted={(e, newValue) => props.filterByMinimumCleans(newValue)}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={valuetext}
         // marks={minCleansMarks}
-        defaultValue={[12, 15]}
+        defaultValue={[1, 50]}
         min={1}
         max={50}
       />
@@ -185,9 +188,7 @@ export default function CardContainer(props) {
         <Grid className={classes.cardsContainer} container spacing={2} >
             {
               props.availableCleaners.map(cleaner => 
-                <Grid item className={classes.cardDiv}>
-                <CleanerCard cleaner={cleaner} booking={props.booking} storeBookingRequirements={props.storeBookingRequirements} processBooking={props.processBooking} currentUser={props.currentUser} storeSelectedCleaner={props.storeSelectedCleaner}/>
-                </Grid>
+                <CleanerCard key={cleaner.id} cleaner={cleaner} booking={props.booking} storeBookingRequirements={props.storeBookingRequirements} processBooking={props.processBooking} currentUser={props.currentUser} storeSelectedCleaner={props.storeSelectedCleaner}/>
               )
             }
             

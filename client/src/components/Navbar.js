@@ -48,7 +48,9 @@ const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUse
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar> 
         <NavLink to="/new-booking" style={link}>New Booking</NavLink>  
-        { currentUser ? <NavLink to={`/users/${currentUser.id}/cleanings`} style={link}>My Bookings</NavLink> : null }
+        {/* { currentUser ? <NavLink to={`/users/${currentUser.id}/cleanings`} style={link}>My Bookings</NavLink> : null } */}
+        { currentUser ? <NavLink to={`/users/:id/cleanings`} style={link}>My Bookings</NavLink> : null }
+
         { !userLoggedIn ? <NavLink to="/signup" style={link}>Sign Up</NavLink> : null }
         <LoginControl toggleUserLogIn={toggleUserLogIn} addCurrentUser={addCurrentUser} removeCurrentUser={removeCurrentUser}/>
       </Toolbar>
