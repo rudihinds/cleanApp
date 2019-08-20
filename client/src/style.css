@@ -1,0 +1,80 @@
+body, html {
+  height: 100%
+}
+
+.bgimg {
+  /* Background image */
+  /* background-image: url('/w3images/forestbridge.jpg'); */
+  /* Full-screen */
+  height: 100%;
+  /* Center the background image */
+  /* background-position: center; */
+  /* Scale and zoom in the image */
+  background-size: cover;
+  /* Add position: relative to enable absolutely positioned elements inside the image (place text) */
+  /* position: relative; */
+  /* Add a white text color to all elements inside the .bgimg container */
+  color: white;
+  /* Add a font */
+  font-family: "Courier New", Courier, monospace;
+  /* Set the font-size to 25 pixels */
+  font-size: 25px;
+}
+
+.home-body {
+    height: 100vh;
+    width: 100vw;
+    padding: 0; 
+    position: relative
+}
+
+.h1 {
+    /* margin: auto; */
+    color: white;
+    /* position: relative; */
+    /* padding: 1em 0; */
+    text-align:center;
+    /* vertical-align:middle ; */
+    /* vertical-align:bottom; */
+    height: 50%;
+    position: absolute;
+    bottom: 0;
+    /* left: 0; */
+}
+
+.middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.topleftlogo {
+  position: absolute;
+  top: 0;
+  left: 16px;
+  padding-top: 15px;
+  margin: 0
+}
+
+/* .bottomleft {
+  position: absolute;
+  padding-top: 0;
+  bottom: 0;
+  left: 16px;
+} */
+
+@-webkit-keyframes color-change-2x {
+  0% {
+    background: #19dcea;
+  }
+  100% {
+    background: #b22cff;
+  }
+}
+
+.color-change-2x {
+	-webkit-animation: color-change-2x 9s linear infinite alternate both;
+	        animation: color-change-2x 9s linear infinite alternate both;
+}

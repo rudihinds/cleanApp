@@ -19,6 +19,12 @@ code {
   margin-right: 'auto';
 }
 
+.home-body {
+    background: 'blue';
+    max-height: '500px'
+}
+
+
 @-webkit-keyframes color-change-2x{0%{background:#19dcea}100%{background:#b22cff}}@keyframes color-change-2x{0%{background:#19dcea}100%{background:#b22cff}}
 
 .homeBody {
@@ -27,5 +33,4 @@ code {
 }
 
 .home-container{
-  animation-name: "color-change-2x";
 }

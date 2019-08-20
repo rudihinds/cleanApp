@@ -4,27 +4,25 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import "../index.css"
+// import Container from '@material-ui/core'
+import "../style.css"
 
 
-const homeBody = makeStyles({
-    background: {
-        backgroundColor: '#ccc',
-        maxHeight: '500px'
+export default function Landing(props) {
 
-    },
-})
-
-export default function BookingForm(props) {
-
-const classes = homeBody();
 
     return(
-        <div className={classes.homeBody}>
+        
+        // <div className="color-change-2x home-body">
+        <div className="color-change-2x bgimg home-body">
+
            
-            <h1 className>Lets go champ!</h1>
+            <p className="middle">Lets go champ!</p>
+            <p className="topleftlogo">UmmyCleans</p>
+            {/* <p classNme='bottomleft'>By Rudi Hinds</p> */}
           
         </div>
+        
     )
 }
 

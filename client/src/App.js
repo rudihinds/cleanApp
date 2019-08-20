@@ -8,7 +8,7 @@ import Navbar from './components/Navbar'
 import BookingForm from './components/BookingForm';
 import moment from 'moment'
 import CardContainer from './components/CardContainer'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
 import MyBookings from './components/MyBookings'
 import ConfirmDetailsPage from './components/ConfirmDetailsPage'
 import Landing from './components/Landing'
@@ -180,11 +180,15 @@ class App extends React.Component{
     
     return (
       <div>
+        <Router>
+        <Switch>
+        <Route exact path="/" render={() => <Landing />} />
         <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} currentUser={this.state.currentUser} />
         <br />
         <br />
         <br />
         <br />
+        </Switch>
         <Switch>
             <Route exact path='/new-booking' render={() => <BookingForm priceFilterRange={this.state.priceFilterRange} ratingFilterRange={this.state.ratingFilterRange} minimumCleansFilterRange={this.state.minimumCleansFilterRange} filterByMinimumCleans={this.filterByMinimumCleans} filterByRating={this.filterByRating} filterByPrice={this.filterByPrice} availableCleaners={filteredCleaners} bookingRequirements={this.state.bookingRequirements} storeBookingRequirements={this.storeBookingRequirements} currentUser={this.state.currentUser} processBooking={this.processBooking} storeSelectedCleaner={this.storeSelectedCleaner} />} />
           { this.state.currentUser ?
@@ -192,10 +196,10 @@ class App extends React.Component{
           : null }
             <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser}/>} />
             <Route exact path="/new-booking" render={() => <App/>} />
-            <Route exact path="/" render={() => <Landing />} />
 
             <Route path="/checkout" render={(rudiProps) => <ConfirmDetailsPage rudiProps={rudiProps} selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} currentUser={this.state.currentUser} />} />
         </Switch>
+        </Router>  
       </div>
     )
   }
