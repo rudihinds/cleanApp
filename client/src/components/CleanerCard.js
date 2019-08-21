@@ -87,7 +87,7 @@ export default function CleanerCard(props) {
 
     
     <Grid item className={classes.cardDiv} key={props.cleaner.id}>
-    <Card className={classes.card}>
+    <Card className="{classes.card} slit-in-vertical">
       <CardActionArea>
         <CardMedia
           component="img"
@@ -108,12 +108,12 @@ export default function CleanerCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" >
+        {/* <Button size="small" color="primary" >
           See Reviews
-        </Button>
+        </Button> */}
         {/* <Button size="small" color="primary" onClick={handleClickOpen}> */}
         <NavLink to="/checkout/address-form">
-          <Button size="small" color="primary" onClick={handleClick}>
+          <Button size="medium" color="primary" onClick={handleClick}>
           Book Cleaner
           </Button>
         </NavLink> 

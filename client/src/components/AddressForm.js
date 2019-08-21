@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function AddressForm(props) {
-  console.log(props)
+  // console.log(props)
 
   // need to add if statement, if props. address details is true (sent down if they filled it in it will be stored
   // by app, then fill out the details for you. also if user has details in the user object then fill it out)
@@ -149,10 +149,13 @@ export default function AddressForm(props) {
         setErrors(errors)
         console.log(errors)
       } else { 
+        props.toggleAddressFilledOut()
         props.changeAddressFilledOut(addressFormDetails)
         props.history.push('/checkout/payment-form')
       }
     }
+
+    
 
     return (
 

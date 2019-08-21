@@ -168,9 +168,10 @@ export default function BookingForm(props) {
     
       {/* dropdown for start date*/}
 
-    <FormControl>
-      <MuiPickersUtilsProvider utils={DateFnsUtils} >
+    <FormControl variant="outlined">
+      <MuiPickersUtilsProvider utils={DateFnsUtils} variant="outlined" >
         <DatePicker
+          variant="outlined"
           margin="normal"
           id="mui-pickers-date"
           label="Start Date"
@@ -222,7 +223,7 @@ export default function BookingForm(props) {
         />
        </MuiPickersUtilsProvider>
        </FormControl>
-      <FormControl onClick={handleSubmit}>
+      <FormControl onClick={handleSubmit} className="heartbeat">
        <Fab variant="extended" aria-label="submit" className={classes.fab}>
         <NavigationIcon className={classes.extendedIcon} />
         Find Cleaners

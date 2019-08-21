@@ -16,53 +16,31 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// function ConfirmDetailsPage({currentUser, selectedCleaner, bookingRequirements, rudiProps}) {
+// function ConfirmDetailsPage({currentUser, selectedCleaner, bookingRequirements, rudiProps, props}) {
+  
 function ConfirmDetailsPage(props) {
-
-
-  // useEffect(() => {
-  // }
-    
-  //   if (!((currentUser) && (selectedCleaner) && (bookingRequirements))) {
-  //       rudiProps.history.push('new-booking')
-  //       console.log("the gang is not here!!!")
-  //   } else {
-  //       console.log("the gang is here!!!")
-  //       }
-  // }, [])
-
-
-  const [currentUser, setCurrentUser] = React.useState({id:1});
-  const [selectedCleaner, setSelectedCleaner] = React.useState({
-    first_name: "Carmina", 
-    last_name: "Murazik", 
-    hourly_rate: 15, 
-    image: "https://robohash.org/possimussitexpedita.png?size=..."
-  })
-  const [bookingRequirements, setBookingRequirements] = React.useState({
-      town: "London", 
-      frequency: "Weekly", 
-      duration: 180, 
-      start_time: "Sat Aug 24 2019 05:30:00 GMT+0100"
-  })
-  const [addressFilledOut, setAddressFilledOut] = React.useState(false);
-
-  const changeAddressFilledOut = (addressDetailsObj) => {
-    console.log(addressFilledOut)
-    console.log(addressDetailsObj)
-    setAddressFilledOut(true)
-    console.log(addressFilledOut)
-  } 
-
-  const addressComponentShowing = () => setAddressFilledOut(false)
-  const paymentComponentShowing = () => setAddressFilledOut(true)
-
-
-
+  // console.log(props)
 
   // const [currentUser, setCurrentUser] = React.useState({currentUser});
   // const [selectedCleaner, setSelectedCleaner] = React.useState({selectedCleaner})
   // const [bookingRequirements, setBookingRequirements] = React.useState({bookingRequirements})
+
+  const [addressFilledOut, setAddressFilledOut] = React.useState(false);
+  const toggleAddressFilledOut = () => setAddressFilledOut(true)
+  const addressComponentShowing = () => setAddressFilledOut(false)
+  const paymentComponentShowing = () => setAddressFilledOut(true)
+
+  useEffect(() => {
+    if (!((props.currentUser) && (props.selectedCleaner) && (props.bookingRequirements))) {
+      props.rudiProps.history.push('/new-booking')
+      console.log("the gang is not here!!!")
+        } else {
+        console.log("the gang is here!!!")
+        }
+    }, [])
+  
+    
+
   const classes = useStyles();
 
   return (
@@ -76,13 +54,17 @@ function ConfirmDetailsPage(props) {
         </Typography>
         <ProgressBar addressFilledOut={addressFilledOut} />
         <br/>
-
         <h3 className={classes.h3}>Complete Your Booking</h3>
         <br/>
-        
-
-         
-        <CleaningAddress paymentComponentShowing={paymentComponentShowing} addressComponentShowing={addressComponentShowing} addressFilledOut={addressFilledOut} changeAddressFilledOut={changeAddressFilledOut} currentUser={currentUser} cleaner={selectedCleaner} bookingRequirements={bookingRequirements}/>
+        <CleaningAddress 
+        processBooking={props.rudiProps.processBooking} 
+        paymentComponentShowing={paymentComponentShowing} 
+        addressComponentShowing={addressComponentShowing} 
+        addressFilledOut={addressFilledOut} 
+        toggleAddressFilledOut={toggleAddressFilledOut} 
+        changeAddressFilledOut={props.changeAddressFilledOut} 
+        currentUser={props.currentUser} cleaner={props.selectedCleaner} 
+        bookingRequirements={props.bookingRequirements}/>
         {/* <BookingSummary />  */}
       </Paper>
     </div>
@@ -104,3 +86,16 @@ export default withRouter(ConfirmDetailsPage);
       // start_time: "Sat Aug 24 2019 05:30:00 GMT+0100"
 
 
+  // const [currentUser, setCurrentUser] = React.useState({id:1});
+  // const [selectedCleaner, setSelectedCleaner] = React.useState({
+  //   first_name: "Carmina", 
+  //   last_name: "Murazik", 
+  //   hourly_rate: 15, 
+  //   image: "https://robohash.org/possimussitexpedita.png?size=..."
+  // })
+  // const [bookingRequirements, setBookingRequirements] = React.useState({
+  //     town: "London", 
+  //     frequency: "Weekly", 
+  //     duration: 180, 
+  //     start_time: "Sat Aug 24 2019 05:30:00 GMT+0100"
+  // })

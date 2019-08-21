@@ -2,6 +2,7 @@ const apiEndpoint = 'http://localhost:3000/api/v1'
 const usersUrl = `${apiEndpoint}/users`
 const cleanersUrl = `${apiEndpoint}/cleaners`
 const customersUrl = `${apiEndpoint}/customers`
+//eslint-disable-next-line 
 const reviewsUrl = `${apiEndpoint}/customers`
 const cleaningsUrl = `${apiEndpoint}/cleanings`
 const loginUrl = `${apiEndpoint}/login`

@@ -95,33 +95,23 @@ function CleaningAddress(props) {
     {/* <Route exact path="/checkout" render={(rudiProps) => <ConfirmDetailsPage rudiProps={rudiProps} selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} currentUser={this.state.currentUser} />} /> */}
 
     <Switch>
-    <Route path="/checkout/address-form" render={(rudiProps) => <AddressForm {...rudiProps} addressComponentShowing={props.addressComponentShowing} changeAddressFilledOut={props.changeAddressFilledOut} cleaner={props.cleaner} addressFilledOut={props.addressFilledOut}  />} />
+    <Route path="/checkout/address-form" render={(rudiProps) => <AddressForm 
+    {...rudiProps} 
+    addressComponentShowing={props.addressComponentShowing} 
+    toggleAddressFilledOut={props.toggleAddressFilledOut}
+    changeAddressFilledOut={props.changeAddressFilledOut} 
+    cleaner={props.cleaner} 
+    addressFilledOut={props.addressFilledOut}  />} 
+    />
     
     {/* <AddressForm changeAddressFilledOut={props.changeAddressFilledOut} /> */}
-    <Route path="/checkout/payment-form" render={(rudiProps) => <PaymentForm {...rudiProps} paymentComponentShowing={props.paymentComponentShowing} changeAddressFilledOut={props.changeAddressFilledOut}  />} />
+    <Route path="/checkout/payment-form" render={(rudiProps) => <PaymentForm 
+    processBooking={props.processBooking} 
+    {...rudiProps} 
+    paymentComponentShowing={props.paymentComponentShowing} 
+    changeAddressFilledOut={props.changeAddressFilledOut}  />} 
+    />
     </Switch>
-
-    
-    {/* <PaymentForm /> */}
-
-  {/* <CreditCardInput
-    cardNumberInputProps={{ value: cardNumber, onChange: this.handleCardNumberChange }}
-    cardExpiryInputProps={{ value: expiry, onChange: this.handleCardExpiryChange }}
-    cardCVCInputProps={{ value: cvc, onChange: this.handleCardCVCChange }}
-    fieldClassName="input"
-    
-  /> */}
-    
-    {/* <PaymentFormTest
-      number={input.number.value}
-      name={input.name.value}
-      expiry={input.expiry.value}
-      cvc={input.cvc.value}
-      focused={state.focused}
-    /> */}
-
-
-    {/* </Grid> */}
      
     </form>
     <div className={classes.div}>

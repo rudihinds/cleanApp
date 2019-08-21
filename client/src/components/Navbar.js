@@ -43,18 +43,28 @@ const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUse
       API.login(user).then(console.log)
   }
 
+  // do not return on hompage
+  if (window.location.pathname === '/') {
+    return null;
+  }
+
   return (
-   
+   <div>
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar> 
         <NavLink to="/new-booking" style={link}>New Booking</NavLink>  
-        {/* { currentUser ? <NavLink to={`/users/${currentUser.id}/cleanings`} style={link}>My Bookings</NavLink> : null } */}
-        { currentUser ? <NavLink to={`/users/:id/cleanings`} style={link}>My Bookings</NavLink> : null }
+        { currentUser ? <NavLink to={`/users/${currentUser.id}/cleanings`} style={link}>My Bookings</NavLink> : null }
+        {/* { currentUser ? <NavLink to={`/users/:id/cleanings`} style={link}>My Bookings</NavLink> : null } */}
 
         { !userLoggedIn ? <NavLink to="/signup" style={link}>Sign Up</NavLink> : null }
         <LoginControl toggleUserLogIn={toggleUserLogIn} addCurrentUser={addCurrentUser} removeCurrentUser={removeCurrentUser}/>
       </Toolbar>
     </AppBar>
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
    
   )
 }

@@ -53,9 +53,9 @@ export default function BookingCard (props){
             
           }
         />
-            <IconButton edge="end" aria-label="comments">
-            <EditIcon />
-            </IconButton>
+            {/* <IconButton edge="end" aria-label="comments"> */}
+            {/* <EditIcon /> */}
+            {/* </IconButton> */}
             <IconButton edge="end" aria-label="comments">
             <DeleteIcon onClick={handleDelete} />
             </IconButton>

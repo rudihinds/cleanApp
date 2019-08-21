@@ -131,15 +131,17 @@ class App extends React.Component{
     
   }
 
-  processBooking = (cleaner_id, newBooking) => {
+  processBooking = () => {
+    let hours = this.state.bookingRequirements.duration / 60
+    let total_cost = this.state.cleanings.hourly_rate * hours
     const cleaning = {
-      cleaner_id: cleaner_id,
+      cleaner_id: this.state.cleanings.cleaner_id,
       user_id: this.state.currentUser.id,
-      address_one: newBooking.address_one,
-      adress_two: newBooking.address_two,
-      hourly_rate: newBooking.hourly_rate,
-      postcode: newBooking.postcode,
-      total_cost: newBooking.total_cost,
+      address_one: this.state.cleanings.address_one,
+      adress_two: this.state.cleanings.adress_two,
+      hourly_rate: this.state.cleanings.hourly_rate,
+      postcode: this.state.cleanings.postcode,
+      total_cost: total_cost,
       start_time: this.state.bookingRequirements.bookingRequestTimeRange.start.toString().slice(0, -9),
       end_time: this.state.bookingRequirements.bookingRequestTimeRange.end.toString().slice(0, -9),
       duration: this.state.bookingRequirements.duration,
@@ -159,8 +161,44 @@ class App extends React.Component{
     (cleaner.average_rating >= this.state.ratingFilterRange[0] && cleaner.average_rating <= this.state.ratingFilterRange[1]) &&
     (cleaner.total_cleans >= this.state.minimumCleansFilterRange[0] && cleaner.total_cleans <= this.state.minimumCleansFilterRange[1])
   })
+
+  changeAddressFilledOut = (addressDetails) => {
+    // console.log(this.state.cleanings[0][0].postcode)
+    // console.log(this.state.cleanings[0][0].frequency)
+    // console.log(this.state.cleanings[0][0].hourly_rate)
+    // console.log(this.state.cleanings)
+
+   
+
+
+    // address_one: ""
+    // adress_two: ""
+
+    this.setState({
+      
+      // cleanings[0][0].address_one: [this.state.cleanings[0][0].address_one], [addressDetails.addressOne]
+      // cleanings: [this.state.cleanings[0][0].adress_two: addressDetails.addressTwo],
+      // cleanings: [this.state.cleanings[0][0].postcode: addressDetails.postcode],
+      cleanings: Object.entries(this.state.cleanings[0][0]).reduce ((obj, arr) => {
+        if ('address_one' === arr[0]) {
+          obj[arr[0]] = addressDetails.addressOne
+          return obj
+        } else if ('adress_two' === arr[0]) {
+          obj[arr[0]] = addressDetails.addressTwo
+          return obj
+        } else if ('postcode' === arr[0]) {
+          obj[arr[0]] = addressDetails.postcode
+          return obj
+        } else {
+          obj[arr[0]] = arr[1]
+          return obj
+        }
+      }, {})
+    })
+  }
   
   render(){
+    console.log(this.state)
     // console.log(this.state.priceFilterRange, this.state.ratingFilterRange, this.state.minimumCleansFilterRange)
 
     const filteredCleaners = this.getFilteredCleaners()
@@ -180,26 +218,47 @@ class App extends React.Component{
     
     return (
       <div>
-        <Router>
-        <Switch>
-        <Route exact path="/" render={() => <Landing />} />
+        <Router>        
         <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} currentUser={this.state.currentUser} />
-        <br />
-        <br />
-        <br />
-        <br />
-        </Switch>
         <Switch>
-            <Route exact path='/new-booking' render={() => <BookingForm priceFilterRange={this.state.priceFilterRange} ratingFilterRange={this.state.ratingFilterRange} minimumCleansFilterRange={this.state.minimumCleansFilterRange} filterByMinimumCleans={this.filterByMinimumCleans} filterByRating={this.filterByRating} filterByPrice={this.filterByPrice} availableCleaners={filteredCleaners} bookingRequirements={this.state.bookingRequirements} storeBookingRequirements={this.storeBookingRequirements} currentUser={this.state.currentUser} processBooking={this.processBooking} storeSelectedCleaner={this.storeSelectedCleaner} />} />
+
+            <Route exact path="/" render={(props) => <Landing {...props} />} />
+
+            <Route path='/new-booking' render={() => <BookingForm 
+            priceFilterRange={this.state.priceFilterRange} 
+            ratingFilterRange={this.state.ratingFilterRange} 
+            minimumCleansFilterRange={this.state.minimumCleansFilterRange} 
+            filterByMinimumCleans={this.filterByMinimumCleans} 
+            filterByRating={this.filterByRating} 
+            filterByPrice={this.filterByPrice} 
+            availableCleaners={filteredCleaners} 
+            bookingRequirements={this.state.bookingRequirements} 
+            storeBookingRequirements={this.storeBookingRequirements} 
+            currentUser={this.state.currentUser} 
+            processBooking={this.processBooking} 
+            storeSelectedCleaner={this.storeSelectedCleaner} />} 
+            />
+
           { this.state.currentUser ?
             <Route exact path="/users/:id/cleanings" render={() => <MyBookings user={this.state.currentUser}/>} />
           : null }
+
             <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser}/>} />
+
             <Route exact path="/new-booking" render={() => <App/>} />
 
-            <Route path="/checkout" render={(rudiProps) => <ConfirmDetailsPage rudiProps={rudiProps} selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} currentUser={this.state.currentUser} />} />
+            <Route path="/checkout/address-form" render={(rudiProps) => <ConfirmDetailsPage 
+            changeAddressFilledOut={this.changeAddressFilledOut} 
+            processBooking={this.processBooking} 
+            rudiProps={rudiProps} 
+            selectedCleaner={this.state.selectedCleaner} 
+            bookingRequirements={this.state.bookingRequirements} 
+            currentUser={this.state.currentUser} />} 
+            />
+
         </Switch>
-        </Router>  
+
+        </Router>
       </div>
     )
   }

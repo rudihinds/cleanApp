@@ -112,6 +112,11 @@ export default function PaymentForm(props) {
         setCvc(e.target.value)
     }
 
+    const handleClick = (e) => {
+      
+        props.processBooking()
+    }
+
     return (
         
       <div>
@@ -190,7 +195,7 @@ export default function PaymentForm(props) {
       
       
     
-    <Button variant="contained" color="primary" className={classes.button} fullWidth>
+    <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={handleClick}>
         Next
       </Button>
       </div>
