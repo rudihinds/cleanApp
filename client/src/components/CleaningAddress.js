@@ -80,6 +80,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function CleaningAddress(props) {
+  
   console.log(props)
   const classes = useStyles();
   
@@ -95,7 +96,7 @@ function CleaningAddress(props) {
     {/* <Route exact path="/checkout" render={(rudiProps) => <ConfirmDetailsPage rudiProps={rudiProps} selectedCleaner={this.state.selectedCleaner} bookingRequirements={this.state.bookingRequirements} currentUser={this.state.currentUser} />} /> */}
 
     <Switch>
-    <Route path="/checkout/address-form" render={(rudiProps) => <AddressForm 
+    <Route path={props.match.url + '/address-form'} render={(rudiProps) => <AddressForm 
     {...rudiProps} 
     addressComponentShowing={props.addressComponentShowing} 
     toggleAddressFilledOut={props.toggleAddressFilledOut}
@@ -105,9 +106,9 @@ function CleaningAddress(props) {
     />
     
     {/* <AddressForm changeAddressFilledOut={props.changeAddressFilledOut} /> */}
-    <Route path="/checkout/payment-form" render={(rudiProps) => <PaymentForm 
+    <Route path={props.match.url + '/payment-form'} render={(rudiProps) => <PaymentForm 
     processBooking={props.processBooking} 
-    {...rudiProps} 
+    rudiProps={rudiProps} 
     paymentComponentShowing={props.paymentComponentShowing} 
     changeAddressFilledOut={props.changeAddressFilledOut}  />} 
     />

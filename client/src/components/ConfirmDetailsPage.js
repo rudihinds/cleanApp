@@ -25,10 +25,17 @@ function ConfirmDetailsPage(props) {
   // const [selectedCleaner, setSelectedCleaner] = React.useState({selectedCleaner})
   // const [bookingRequirements, setBookingRequirements] = React.useState({bookingRequirements})
 
+  // const [addressFilledOut, setAddressFilledOut] = React.useState(false)
+  // const [addressComponentShowing, setAddressComponentShowing] = React.useState(true)
+  // const [paymentComponentShowing, setPaymentComponentShowing] = React.useState(faslse)
+
   const [addressFilledOut, setAddressFilledOut] = React.useState(false);
   const toggleAddressFilledOut = () => setAddressFilledOut(true)
   const addressComponentShowing = () => setAddressFilledOut(false)
   const paymentComponentShowing = () => setAddressFilledOut(true)
+
+  // const addressComponentShowing = () => setAddressComponentShowing(false)
+  // const paymentComponentShowing = () => setPaymentComponentShowing(true)
 
   useEffect(() => {
     if (!((props.currentUser) && (props.selectedCleaner) && (props.bookingRequirements))) {
@@ -57,7 +64,7 @@ function ConfirmDetailsPage(props) {
         <h3 className={classes.h3}>Complete Your Booking</h3>
         <br/>
         <CleaningAddress 
-        processBooking={props.rudiProps.processBooking} 
+        processBooking={props.processBooking} 
         paymentComponentShowing={paymentComponentShowing} 
         addressComponentShowing={addressComponentShowing} 
         addressFilledOut={addressFilledOut} 

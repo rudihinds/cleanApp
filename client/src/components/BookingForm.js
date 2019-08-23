@@ -22,6 +22,8 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import CardContainer from './CardContainer'
+import Button from '@material-ui/core/Button'
+import FaceIcon from '@material-ui/icons/Face';
 
 // import React, { Fragment, useState } from "react";
 // import { DatePicker, KeyboardDatePicker } from "@material-ui/pickers";
@@ -127,7 +129,7 @@ export default function BookingForm(props) {
     <>
     <form className={classes.root} autoComplete="off">
         {/* dropdown for choosing your town */}
-      <FormControl variant="outlined" className={classes.formControl}>
+      <FormControl variant="outlined" color="secondary" className={classes.formControl}>
         <InputLabel ref={inputLabel} htmlFor="outlined-age-simple">
           Location
         </InputLabel>
@@ -165,6 +167,28 @@ export default function BookingForm(props) {
           
         </Select>
       </FormControl>
+
+    {/* dropdown for duration*/}
+      <FormControl variant="outlined" className={classes.formControl}>
+        <InputLabel ref={inputLabel} htmlFor="outlined-age-simple">
+          {/* For How Long? */}
+        </InputLabel>
+        <Select
+          value={duration}
+          onChange={handleDuration}
+          
+          input={<OutlinedInput labelWidth={labelWidth} name="age" id="outlined-age-simple" />}
+        >
+          <MenuItem value="">
+            <em>Duration</em>
+          </MenuItem>
+          <MenuItem value={120}>2 hours</MenuItem>
+          <MenuItem value={150}>2.5 hours</MenuItem>
+          <MenuItem value={180}>3 hours</MenuItem>
+          <MenuItem value={210}>3.5 hours</MenuItem>
+          <MenuItem value={240}>4 hours</MenuItem>
+        </Select>
+      </FormControl>
     
       {/* dropdown for start date*/}
 
@@ -184,27 +208,9 @@ export default function BookingForm(props) {
       </MuiPickersUtilsProvider>
         </FormControl>
 
-      {/* dropdown for duration*/}
+      
 
-    <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel ref={inputLabel} htmlFor="outlined-age-simple">
-          For How Long?
-        </InputLabel>
-        <Select
-          value={duration}
-          onChange={handleDuration}
-          input={<OutlinedInput labelWidth={labelWidth} name="age" id="outlined-age-simple" />}
-        >
-          <MenuItem value="">
-            <em>Duration</em>
-          </MenuItem>
-          <MenuItem value={120}>2 hours</MenuItem>
-          <MenuItem value={150}>2.5 hours</MenuItem>
-          <MenuItem value={180}>3 hours</MenuItem>
-          <MenuItem value={210}>3.5 hours</MenuItem>
-          <MenuItem value={240}>4 hours</MenuItem>
-        </Select>
-      </FormControl>
+    
 
       {/* dropdown for start time*/}
 
@@ -220,15 +226,16 @@ export default function BookingForm(props) {
           KeyboardButtonProps={{
             'aria-label': 'change time',
           }}
+          
         />
        </MuiPickersUtilsProvider>
        </FormControl>
-      <FormControl onClick={handleSubmit} className="heartbeat">
-       <Fab variant="extended" aria-label="submit" className={classes.fab}>
-        <NavigationIcon className={classes.extendedIcon} />
+      <Button onClick={handleSubmit} className="heartbeat">
+       <Fab variant="extended" aria-label="submit" className={classes.fab} color="secondary">
+        <FaceIcon className={classes.extendedIcon} />
         Find Cleaners
       </Fab>
-      </FormControl>
+      </Button>
     </form>
         <CardContainer priceFilter={props.priceFilterRange} ratingFilter={props.ratingFilterRange} minCleansFilter={props.minimumCleansFilterRange} filterByMinimumCleans={props.filterByMinimumCleans} filterByRating={props.filterByRating} filterByPrice={props.filterByPrice} availableCleaners={props.availableCleaners} booking={props.bookingRequirements} storeBookingRequirements={props.storeBookingRequirements} processBooking={props.processBooking} currentUser={props.currentUser} storeSelectedCleaner={props.storeSelectedCleaner}/>
                 

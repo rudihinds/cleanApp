@@ -17,6 +17,8 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import moment from 'moment'
 import Avatar from '@material-ui/core/Avatar';
 import { NavLink } from 'react-router-dom'
+import Ratings from 'react-ratings-declarative';
+
 
 const useStyles = makeStyles({
   card: {
@@ -104,6 +106,11 @@ export default function CleanerCard(props) {
             Price Per Hour: £{props.cleaner.hourly_rate}.00
             <br/>
             Average rating: {props.cleaner.average_rating}
+            {/* Average rating: {<Ratings 
+            rating={3.403}
+            widgetDimensions="40px"
+            widgetSpacings="15px" />} */}
+
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -12,6 +12,9 @@ import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import HomeIcon from '@material-ui/icons/Home';
+import LocationCityIcon from '@material-ui/icons/LocationCity';
+import PaymentIcon from '@material-ui/icons/Payment';
 
 
 const ColorlibConnector = withStyles({
@@ -66,9 +69,9 @@ function ColorlibStepIcon(props) {
   const { active, completed } = props;
 
   const icons = {
-    // 1: <AvatarIcon />,
-    // 2: <GroupAddIcon />,
-    // 3: <VideoLabelIcon />,
+    1: <HomeIcon />,
+    2: <LocationCityIcon />,
+    3: <PaymentIcon />,
   };
 
   return (

@@ -8,6 +8,9 @@ import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import moment from 'moment'
 import Cards from 'react-credit-cards';
+import { withRouter } from 'react-router-dom'
+import swal from 'sweetalert';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -74,7 +77,10 @@ const useStyles = makeStyles(theme => ({
   }}));
 
 
-export default function PaymentForm(props) {
+function PaymentForm(props) {
+
+  
+
     const classes = useStyles();
     const [number, setNumber] = React.useState('')
     const [name, setName] = React.useState('')
@@ -115,6 +121,22 @@ export default function PaymentForm(props) {
     const handleClick = (e) => {
       
         props.processBooking()
+        swal({
+          title: "Booking Complete",
+          text: "Click to navigate back to your bookings",
+          icon: "success",
+          button: "My Bookings",
+        }).then(buttonClicked => {
+          if (buttonClicked) 
+          { 
+            props.rudiProps.history.push("/users/:id/cleanings")
+          } return 
+        })
+
+        // swal("Booking Complete", "Taking you back to your bookings", "success");
+        // props.rudiProps.history.push('/my-bookings')
+        // props.rudiProps.history.push("/users/:id/cleanings")
+
     }
 
     return (
@@ -200,3 +222,6 @@ export default function PaymentForm(props) {
       </Button>
       </div>
     )}
+
+// export default withRouter(CleaningAddress)
+export default withRouter(PaymentForm)

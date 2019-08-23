@@ -12,6 +12,7 @@ import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    zIndex: 0,
     display: 'flex',
     flexWrap: 'wrap',
     flexGrow: 1,
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
   },
   filterContainer: {
+    position: "sticky",
     border: "1px solid lightgrey ",
     flexDirection: 'column',
     width: "350px",
@@ -171,14 +173,14 @@ export default function CardContainer(props) {
             </div>
           </div>
 
-          <div className={classes.listItem}>
+          {/* <div className={classes.listItem}>
               <p className={classes.pTag}>I have pets</p>
               <p className={classes.pTag}>Lots!</p>
           </div>
           <div className={classes.listItem}>
               <p className={classes.pTag}>I require Ironing</p>
               <p className={classes.pTag}>Heaps!</p>
-          </div>
+          </div> */}
           </div>
           {/* end filter container */}
 
