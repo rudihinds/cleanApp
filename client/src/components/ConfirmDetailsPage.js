@@ -37,14 +37,14 @@ function ConfirmDetailsPage(props) {
   // const addressComponentShowing = () => setAddressComponentShowing(false)
   // const paymentComponentShowing = () => setPaymentComponentShowing(true)
 
-  useEffect(() => {
-    if (!((props.currentUser) && (props.selectedCleaner) && (props.bookingRequirements))) {
-      props.rudiProps.history.push('/new-booking')
-      console.log("the gang is not here!!!")
-        } else {
-        console.log("the gang is here!!!")
-        }
-    }, [])
+  // useEffect(() => {
+  //   if (!((props.currentUser) && (props.selectedCleaner) && (props.bookingRequirements))) {
+  //     props.rudiProps.history.push('/new-booking')
+  //     console.log("the gang is not here!!!")
+  //       } else {
+  //       console.log("the gang is here!!!")
+  //       }
+  //   }, [])
   
     
 

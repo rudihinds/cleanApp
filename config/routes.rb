@@ -13,6 +13,10 @@ Rails.application.routes.draw do
         post '/login', to: 'auth#create'
         get '/validate', to: 'auth#validate'
         get '/users/:id/cleanings', to: 'users#my_cleanings'
+        post '/stripe-account', to: 'stripe_account#create'
+        get "stripe/connect", to: "stripe#connect", as: :stripe_connect
+
+
         
 
         # get '/${:id}/cleanings', to: 'cleanings#show'

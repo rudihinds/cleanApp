@@ -33,7 +33,11 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: "white",
+    borderTop: "1px solid lightgrey",
+    borderBottom: "1px solid lightgrey"
+
   },
   formControl: {
     margin: theme.spacing(1),

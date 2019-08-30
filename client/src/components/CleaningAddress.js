@@ -13,6 +13,7 @@ import PaymentForm from './PaymentForm'
 import 'react-credit-cards/lib/styles.scss'
 import CreditCardInput from 'react-credit-card-input';
 import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
+import {Elements, StripeProvider} from 'react-stripe-elements'
 
 
 
@@ -106,12 +107,17 @@ function CleaningAddress(props) {
     />
     
     {/* <AddressForm changeAddressFilledOut={props.changeAddressFilledOut} /> */}
+      <StripeProvider apiKey="pk_test_oBbIYsor0MX1C0sQaNTkQPjU00TyWludUP">
+        <Elements>
     <Route path={props.match.url + '/payment-form'} render={(rudiProps) => <PaymentForm 
     processBooking={props.processBooking} 
     rudiProps={rudiProps} 
     paymentComponentShowing={props.paymentComponentShowing} 
     changeAddressFilledOut={props.changeAddressFilledOut}  />} 
     />
+    </Elements>
+    </StripeProvider>
+
     </Switch>
      
     </form>
@@ -124,28 +130,40 @@ function CleaningAddress(props) {
           </Container>
           <Container className={classes.listItem}>
               <p>Frequency</p>
-              <p>{props.bookingRequirements.frequency}</p>
+              {/* <p>{props.bookingRequirements.frequency}</p> */}
+              <p>weekly</p>
+
           </Container>
           <Container className={classes.listItem}>
               <p>Duration</p>
-              <p>{`${moment.utc(moment.duration(props.bookingRequirements.duration, 'minutes').asMilliseconds()).format("H.m")} hrs`}</p>
+              {/* <p>{`${moment.utc(moment.duration(props.bookingRequirements.duration, 'minutes').asMilliseconds()).format("H.m")} hrs`}</p> */}
+              <p>12</p>
+
           </Container>
           <Container className={classes.listItem}>
               <p>Time</p>
               {/* <p>{`${moment.utc(moment.duration(props.booking.duration, 'minutes').asMilliseconds()).format("H.mm")}`}</p> */}
-              <p>{`${moment(props.bookingRequirements.start_time).format("h:mm a")}`}</p>
+              {/* <p>{`${moment(props.bookingRequirements.start_time).format("h:mm a")}`}</p> */}
+              <p>12</p>
+
           </Container>
           <Container className={classes.listItem}>
               <p>Date</p>
-              <p>{`${moment(props.bookingRequirements.start_time).format("ddd, MMM Do")}`}</p>              
+              {/* <p>{`${moment(props.bookingRequirements.start_time).format("ddd, MMM Do")}`}</p>               */}
+              <p>12</p>              
+
           </Container>
           <Container className={classes.listItem}>
               <p>Price Per Hour</p>
-              <p>£{props.cleaner.hourly_rate}</p>
+              {/* <p>£{props.cleaner.hourly_rate}</p> */}
+              <p>12</p>
+
           </Container>
           <Container className={classes.listItem}>
               <h3>Total Cost</h3>
-              <h3>£{( props.bookingRequirements.duration / 60 ) * props.cleaner.hourly_rate}</h3>
+              {/* <h3>£{( props.bookingRequirements.duration / 60 ) * props.cleaner.hourly_rate}</h3> */}
+              <h3>22</h3>
+
           </Container>
       </Container>
 

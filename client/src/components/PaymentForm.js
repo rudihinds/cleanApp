@@ -10,6 +10,8 @@ import moment from 'moment'
 import Cards from 'react-credit-cards';
 import { withRouter } from 'react-router-dom'
 import swal from 'sweetalert';
+import { injectStripe } from 'react-stripe-elements'
+import processPayment from '../adapters/API'
 
 
 
@@ -93,6 +95,9 @@ function PaymentForm(props) {
 
      });
 
+
+   
+
     const handleNumberChange = (e) => {
         e.preventDefault()
         setFocused('number')
@@ -118,20 +123,32 @@ function PaymentForm(props) {
         setCvc(e.target.value)
     }
 
-    const handleClick = (e) => {
-      
-        props.processBooking()
-        swal({
-          title: "Booking Complete",
-          text: "Click to navigate back to your bookings",
-          icon: "success",
-          button: "My Bookings",
-        }).then(buttonClicked => {
-          if (buttonClicked) 
-          { 
-            props.rudiProps.history.push("/users/:id/cleanings")
+    const handleClick = async (e) => {
+
+      let chargeToken = await props.stripe.createToken({name: "Name"})
+      let charge = {
+        amount: 999,
+        currency: 'gbp',
+        description: 'Example charge',
+        token: chargeToken.token.id
+      }
+
+      let response = await processPayment(charge)
+        if (response.ok) {
+          console.log("purchase complete!")
+          props.processBooking()
+          swal({
+            title: "Booking Complete",
+            text: "Click to navigate back to your bookings",
+            icon: "success",
+            button: "My Bookings",
+          }).then(buttonClicked => {
+            if (buttonClicked) 
+            { 
+              props.rudiProps.history.push("/users/:id/cleanings")
           } return 
         })
+      }
 
         // swal("Booking Complete", "Taking you back to your bookings", "success");
         // props.rudiProps.history.push('/my-bookings')
@@ -218,10 +235,11 @@ function PaymentForm(props) {
       
     
     <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={handleClick}>
-        Next
+        Finish Booking
       </Button>
       </div>
     )}
 
 // export default withRouter(CleaningAddress)
-export default withRouter(PaymentForm)
+// export default withRouter(PaymentForm)
+export default injectStripe(PaymentForm)

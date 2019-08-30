@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import CleanerCard from './CleanerCard'
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
+import Container from '@material-ui/core/Container'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,14 +30,15 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
   },
   filterContainer: {
-    position: "sticky",
+    position: "relative, fixed",
     border: "1px solid lightgrey ",
     flexDirection: 'column',
     width: "350px",
     // maxWidth: "100%",
-    maxHeight: "100%",
+    maxHeight: "215px",
     alignItems: 'flex-start',
     borderRadius: '5px',
+    backgroundColor:  'white'
   },
   cardsContainer: {
     width: "50%",
@@ -109,7 +111,7 @@ export default function CardContainer(props) {
   // const minCleansMarks = [{value: 1,},{value: 13,},{value: 14,},{value: 15,},{value: 16,},{value: 17,},{value: 18,},{value: 19,},{value: 20,},];
 
   return (
-    <Grid container className={classes.root} spacing={2}>
+    <Container className={classes.root} spacing={2}>
       {/* filter container begins */}
       <div className={classes.filterContainer}>
       <div className={classes.listItem}>
@@ -205,6 +207,6 @@ export default function CardContainer(props) {
         
         </Paper> */}
       {/* </Grid> */}
-    </Grid>
+    </Container>
   );
 }

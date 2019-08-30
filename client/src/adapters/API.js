@@ -1,3 +1,5 @@
+import StripeConnect from "../components/StripeConnect";
+
 const apiEndpoint = 'http://localhost:3000/api/v1'
 const usersUrl = `${apiEndpoint}/users`
 const cleanersUrl = `${apiEndpoint}/cleaners`
@@ -7,6 +9,8 @@ const reviewsUrl = `${apiEndpoint}/customers`
 const cleaningsUrl = `${apiEndpoint}/cleanings`
 const loginUrl = `${apiEndpoint}/login`
 const validateUrl = `${apiEndpoint}/validate`
+const chargesUrl = `${apiEndpoint}/charges`
+const stripeConnectUrl = `${apiEndpoint}/stripe/connect`
 
 const jsonify = res => res.json()
 
@@ -132,6 +136,23 @@ const createCleaning = (cleaning) => {
       .then(console.log)
 }
 
+const connectStripe = () => {
+    fetch(stripeConnectUrl, { headers: constructHeaders() })
+        .then(res => res.json())
+        .then(console.log)
+}
+
+const processPayment = (charge) => {
+    fetch(chargesUrl, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({ charge })
+    })
+}
+
 
 const clearToken = () => localStorage.removeItem('token')
 
@@ -147,5 +168,7 @@ export default {
     getAvailableCleaners,
     createCleaning,
     getMyCleanings,
-    deleteCleaning
+    deleteCleaning,
+    processPayment,
+    connectStripe
 }

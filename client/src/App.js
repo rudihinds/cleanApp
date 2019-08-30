@@ -13,6 +13,8 @@ import MyBookings from './components/MyBookings'
 import ConfirmDetailsPage from './components/ConfirmDetailsPage'
 import Landing from './components/Landing'
 import PaymentForm from './components/PaymentForm';
+import StripeConnect from './components/StripeConnect';
+import StripeRedirect from './components/StripeRedirect'
 
 class App extends React.Component{
 
@@ -71,7 +73,7 @@ class App extends React.Component{
 
   userLogOut = () => {
     API.clearToken();
-    this.setState({ userLoggedIn: false})
+    this.setState({ userLoggedIn: false })
   }
 
   toggleUserLogIn = () => this.setState({ userLoggedIn: !this.state.userLoggedIn})
@@ -239,7 +241,7 @@ class App extends React.Component{
    
     
     return (
-      <div>
+      <div id="body">
         <Router>        
         <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} currentUser={this.state.currentUser} />
         <Switch>
@@ -277,10 +279,14 @@ class App extends React.Component{
             bookingRequirements={this.state.bookingRequirements} 
             currentUser={this.state.currentUser} />} 
             />
+            
+
+            <Route path="/cleaners/connect-your-stripe-account" render={(rudiProps) => <StripeConnect {...rudiProps}/>} />
+            <Route path="/cleaners/stripe-redirect" render={(rudiProps) => <StripeRedirect {...rudiProps}/>} />
+            
 
             
             {/* <Route path="/checkout/payment-form" render={(props) => <PaymentForm props={props} />}/> */}
-            />
 
             </Switch>
 
