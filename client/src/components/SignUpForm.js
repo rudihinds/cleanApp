@@ -31,7 +31,7 @@ class SignUpForm extends React.Component {
       this.setState({ errors })
     } else {
       API.signUp(this.state.user).then(data => {
-        console.log(data)
+        console.log(data.user)
         if (data.errors) this.setState({errors: data.errors})
         if (data.user) this.setState({
           user: {
@@ -42,7 +42,7 @@ class SignUpForm extends React.Component {
             isCleaner: false
           },
           errors: []
-        }, this.props.handleSignUp)
+        }, this.props.setUserToLoggedIn(data.user))
       })
 
     }

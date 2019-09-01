@@ -5,10 +5,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import API from '../adapters/API'
 import LoginControl from './LoginControl'
 import { NavLink } from 'react-router-dom'
+import SignUpButton from './SignUpButton';
 
 
 
-const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUserLogIn, removeCurrentUser, currentUser}) => {
+const Navbar = ({userLoggedIn, addCurrentUser, toggleUserLogIn, removeCurrentUser, currentUser, setUserToLoggedIn}) => {
     
     
   const [open, setOpen] = React.useState(false);
@@ -19,11 +20,15 @@ const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUse
   const useStyles = makeStyles(theme => ({
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
+      flexDirection: "row"
+
     },
     title: {
-      flexGrow: 1,
+      // flexGrow: 1,
       color: 'white',
-      textDecoration: 'none'
+      textDecoration: 'none',
+      flexDirection: "row"
+
     }
   }));
 
@@ -56,8 +61,10 @@ const Navbar = ({userLoggedIn, toggleModal, userLogIn, addCurrentUser, toggleUse
         { currentUser ? <NavLink to={`/users/${currentUser.id}/cleanings`} style={link}>My Bookings</NavLink> : null }
         {/* { currentUser ? <NavLink to={`/users/:id/cleanings`} style={link}>My Bookings</NavLink> : null } */}
 
-        { !userLoggedIn ? <NavLink to="/signup" style={link}>Sign Up</NavLink> : null }
-        <LoginControl toggleUserLogIn={toggleUserLogIn} addCurrentUser={addCurrentUser} removeCurrentUser={removeCurrentUser}/>
+        {/* { !userLoggedIn ? <NavLink to="/signup" style={link}>Sign Up</NavLink> : null } */}
+        { !userLoggedIn ? <SignUpButton setUserToLoggedIn={setUserToLoggedIn}/> : null }
+
+        <LoginControl userLoggedIn={userLoggedIn} toggleUserLogIn={toggleUserLogIn} addCurrentUser={addCurrentUser} removeCurrentUser={removeCurrentUser}/>
       </Toolbar>
     </AppBar>
         <br />

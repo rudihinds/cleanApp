@@ -40,7 +40,9 @@ function LoginButton(props) {
       title: {
         flexGrow: 1,
         color: 'white',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        flexDirection: "row"
+
       }
     }));
   
@@ -56,8 +58,6 @@ function LoginButton(props) {
           if (userObj) {
             console.log("treated as successful/user valid")
             console.log(userObj)
-            props.toggleLoggedIn()
-            props.toggleUserLogIn()
             props.addCurrentUser(userObj)
             setOpen(false)
           } else {

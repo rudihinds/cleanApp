@@ -15,6 +15,7 @@ import Landing from './components/Landing'
 import PaymentForm from './components/PaymentForm';
 import StripeConnect from './components/StripeConnect';
 import StripeRedirect from './components/StripeRedirect'
+import SignUpButton from './components/SignUpButton'
 
 class App extends React.Component{
 
@@ -78,9 +79,15 @@ class App extends React.Component{
 
   toggleUserLogIn = () => this.setState({ userLoggedIn: !this.state.userLoggedIn})
 
-  addCurrentUser = currentUser => this.setState({ currentUser }) 
+  addCurrentUser = currentUser => this.setState({ 
+    currentUser,
+    userLoggedIn: true
+  }) 
 
-  removeCurrentUser = () => this.setState({ currentUser: null })
+  removeCurrentUser = () => this.setState({ 
+    currentUser: null,
+    userLoggedIn: false
+  })
 
   storeSelectedCleaner = (selectedCleaner) => { 
     // console.log(selectedCleaner, selectedCleaner.id)
@@ -228,6 +235,11 @@ class App extends React.Component{
   })
   }
   }
+
+  setUserToLoggedIn = (currentUser) => this.setState({ 
+    userLoggedIn: true,
+    currentUser
+  })
   
   render(){
     console.log(this.state)
@@ -243,7 +255,7 @@ class App extends React.Component{
     return (
       <div id="body">
         <Router>        
-        <Navbar toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} currentUser={this.state.currentUser} />
+        <Navbar setUserToLoggedIn={this.setUserToLoggedIn} toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} currentUser={this.state.currentUser} />
         <Switch>
 
             <Route exact path="/" render={(props) => <Landing {...props} />} />
@@ -267,7 +279,8 @@ class App extends React.Component{
             <Route exact path="/users/:id/cleanings" render={() => <MyBookings user={this.state.currentUser}/>} />
           : null }
 
-            <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser}/>} />
+            {/* <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser} setUserToLoggedIn={this.setUserToLoggedIn}/>} /> */}
+            {/* <Route exact path="/signup" render={() => <SignUpButton user={this.state.currentUser} setUserToLoggedIn={this.setUserToLoggedIn}/>} /> */}
 
             <Route exact path="/new-booking" render={() => <App/>} />
 

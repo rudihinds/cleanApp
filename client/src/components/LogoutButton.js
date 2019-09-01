@@ -26,8 +26,6 @@ function LogoutButton(props) {
   
     const handleLogout = () => {
         API.clearToken();
-        props.toggleLoggedIn()
-        props.toggleUserLogIn()
         props.removeCurrentUser()
 
         
