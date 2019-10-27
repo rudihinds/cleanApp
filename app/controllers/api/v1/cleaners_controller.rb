@@ -1,6 +1,5 @@
 class Api::V1::CleanersController < ApplicationController
-    skip_before_action :authorize
-
+    # skip_before_action :authorize
     
     def available
         start_time = DateTime.parse(params[:datetime].split('GMT').first)

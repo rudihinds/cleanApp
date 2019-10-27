@@ -12,24 +12,16 @@ class ApplicationController < ActionController::API
   
     def get_token
         token = request.headers["Authorization"] || request.headers["Authorisation"]
-        token == 'null' ? nil : token
+        token == 'null' || token == nil ? nil : token
     end
   
     def set_current_user
-        
       token = get_token
-
-      
       if token && token != 'null'
-     
-        
           decoded_token = decode_token(token)
-          
           @current_user = User.find(decoded_token["user_id"])
-         
       else 
           @current_user = nil
-        
       end
     end
   

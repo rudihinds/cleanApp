@@ -9,7 +9,7 @@ import { Link, Router } from 'react-router-dom'
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 // import Container from '@material-ui/core'
-import "../style.css"
+import "../../style.css"
 
 
 export default function Landing(props) {

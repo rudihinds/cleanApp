@@ -8,7 +8,6 @@ class Api::V1::StripeController < ApplicationController
 
 
     def connect
-        
         user = User.find_by(id: 1)
         # this will be for redirect
         response = HTTParty.post("https://connect.stripe.com/oauth/token",

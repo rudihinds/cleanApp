@@ -1,5 +1,8 @@
 class Api::V1::UsersController < ApplicationController
-    skip_before_action :authorize, only: [:create, :index, :my_cleanings]
+    # skip_before_action :authorize, only: [:create, :index, :my_cleanings]
+    # doesnt check for tokenised user when signing up a user, note: need for login also
+    skip_before_action :authorize, only: [:create]
+
   
     def create
       user = User.create( user_params )

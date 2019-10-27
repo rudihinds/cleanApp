@@ -11,7 +11,7 @@ import Cards from 'react-credit-cards';
 import { withRouter } from 'react-router-dom'
 import swal from 'sweetalert';
 import { injectStripe } from 'react-stripe-elements'
-import processPayment from '../adapters/API'
+import processPayment from '../../adapters/API'
 
 
 

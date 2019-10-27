@@ -1,21 +1,24 @@
 import React from 'react'
 import API from './adapters/API'
 import Dialog from '@material-ui/core/Dialog';
-import LoginForm from './components/SignUpForm'
-import SignUpForm from './components/SignUpForm'
+import LoginForm from './components/customerComponents/SignUpForm'
+import SignUpForm from './components/customerComponents/SignUpForm'
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Navbar from './components/Navbar'
-import BookingForm from './components/BookingForm';
+import Navbar from './components/customerComponents/Navbar'
+import BookingForm from './components/customerComponents/BookingForm';
 import moment from 'moment'
-import CardContainer from './components/CardContainer'
+import CardContainer from './components/customerComponents/CardContainer'
 import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
-import MyBookings from './components/MyBookings'
-import ConfirmDetailsPage from './components/ConfirmDetailsPage'
-import Landing from './components/Landing'
-import PaymentForm from './components/PaymentForm';
-import StripeConnect from './components/StripeConnect';
-import StripeRedirect from './components/StripeRedirect'
-import SignUpButton from './components/SignUpButton'
+import MyBookings from './components/customerComponents/MyBookings'
+import ConfirmDetailsPage from './components/customerComponents/ConfirmDetailsPage'
+import Landing from './components/customerComponents/Landing'
+import PaymentForm from './components/customerComponents/PaymentForm';
+import StripeConnect from './components/customerComponents/StripeConnect';
+import StripeRedirect from './components/customerComponents/StripeRedirect'
+import App_Provider from './components/cleanerComponents/DashboardProvider'
+import SignUpButton from './components/customerComponents/SignUpButton'
+import PrivateRoute from './components/helpers/PrivateRoute';
+import DashboardProvider from './components/cleanerComponents/DashboardProvider';
 
 class App extends React.Component{
 
@@ -34,6 +37,11 @@ class App extends React.Component{
 
 
   componentDidMount(){
+
+    API.validateUser().then(user => {
+      if (!user.error && user.id) this.setState({userLoggedIn: true, currentUser: user})
+    })
+
 
     this.setState({ state: {
       userLoggedIn: false,
@@ -174,12 +182,9 @@ class App extends React.Component{
     }
     API.createCleaning(cleaning)
     // console.log(cleaning)
-      
-    
     // console.log(cleaning)
     // console.log(newBooking)
     // console.log(this.state.currentUser)
-
   }
 
   getFilteredCleaners = () => this.state.availableCleaners.filter(cleaner => {
@@ -242,7 +247,7 @@ class App extends React.Component{
   })
   
   render(){
-    console.log(this.state)
+    console.log(this.state.currentUser)
 
     console.log(this.state.selectedCleaner)
     // console.log(this.state.priceFilterRange, this.state.ratingFilterRange, this.state.minimumCleansFilterRange)
@@ -257,9 +262,9 @@ class App extends React.Component{
         <Router>        
         <Navbar setUserToLoggedIn={this.setUserToLoggedIn} toggleUserLogIn={this.toggleUserLogIn} userLoggedIn={userLoggedIn} toggleLoginModal={this.toggleLoginModal} userLogOut={this.userLogOut} addCurrentUser={this.addCurrentUser} removeCurrentUser={this.removeCurrentUser} currentUser={this.state.currentUser} />
         <Switch>
-
+          {/* these are all the routes for the customer side */}
             <Route exact path="/" render={(props) => <Landing {...props} />} />
-
+            <Route exact path="/providers/:id/dashboard" render={(props) => <App_Provider {...props} />} />
             <Route path='/new-booking' render={() => <BookingForm 
             priceFilterRange={this.state.priceFilterRange} 
             ratingFilterRange={this.state.ratingFilterRange} 
@@ -279,11 +284,7 @@ class App extends React.Component{
             <Route exact path="/users/:id/cleanings" render={() => <MyBookings user={this.state.currentUser}/>} />
           : null }
 
-            {/* <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser} setUserToLoggedIn={this.setUserToLoggedIn}/>} /> */}
-            {/* <Route exact path="/signup" render={() => <SignUpButton user={this.state.currentUser} setUserToLoggedIn={this.setUserToLoggedIn}/>} /> */}
-
             <Route exact path="/new-booking" render={() => <App/>} />
-
             <Route path="/checkout" render={(rudiProps) => <ConfirmDetailsPage 
             changeAddressFilledOut={this.changeAddressFilledOut} 
             processBooking={this.processBooking} 
@@ -292,16 +293,19 @@ class App extends React.Component{
             bookingRequirements={this.state.bookingRequirements} 
             currentUser={this.state.currentUser} />} 
             />
-            
-
             <Route path="/cleaners/connect-your-stripe-account" render={(rudiProps) => <StripeConnect {...rudiProps}/>} />
             <Route path="/cleaners/stripe-redirect" render={(rudiProps) => <StripeRedirect {...rudiProps}/>} />
+
+            {/* these are the routes for the provider side */}
+
+            <PrivateRoute path='/cleaners/:id/dashboard' component={DashboardProvider} currentUser={this.state.currentUser}/>
+        </Switch>
+
             
 
             
             {/* <Route path="/checkout/payment-form" render={(props) => <PaymentForm props={props} />}/> */}
 
-            </Switch>
 
              {/* 
             changeAddressFilledOut={this.changeAddressFilledOut} 
@@ -310,6 +314,10 @@ class App extends React.Component{
             selectedCleaner={this.state.selectedCleaner} 
             bookingRequirements={this.state.bookingRequirements} 
             currentUser={this.state.currentUser} />}  */}
+
+
+            {/* <Route exact path="/signup" render={() => <SignUpForm user={this.state.currentUser} setUserToLoggedIn={this.setUserToLoggedIn}/>} /> */}
+            {/* <Route exact path="/signup" render={() => <SignUpButton user={this.state.currentUser} setUserToLoggedIn={this.setUserToLoggedIn}/>} /> */}
 
        
 

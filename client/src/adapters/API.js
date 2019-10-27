@@ -1,4 +1,4 @@
-import StripeConnect from "../components/StripeConnect";
+import StripeConnect from "../components/customerComponents/StripeConnect";
 
 const apiEndpoint = 'http://localhost:3000/api/v1'
 const usersUrl = `${apiEndpoint}/users`
@@ -66,17 +66,16 @@ const deleteCleaning = (cleaningId) => {
         .then(jsonify)
 }
 
-const getAvailableCleaners = (datetime, duration) => fetch('http://localhost:3000/api/v1/cleaners/available', 
-{
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ datetime, duration })
+const getAvailableCleaners = (datetime, duration) => {
+    return fetch('http://localhost:3000/api/v1/cleaners/available', {
+        method: 'POST',
+        headers: constructHeaders({
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({ datetime, duration })
+    }).then(res => res.json())
 }
-).then(res => res.json())
-//  .then(console.log)
 
 const signUp = user => fetch(usersUrl, { 
     method: 'POST',

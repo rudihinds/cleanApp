@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'react-router-dom'
 import BookingCard from './BookingCard'
-import API from '../adapters/API'
+import API from '../../adapters/API'
 
 
 class MyBookings extends React.Component{

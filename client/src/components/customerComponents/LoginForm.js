@@ -1,5 +1,5 @@
 import React from 'react'
-import API from '../adapters/API'
+import API from '../../adapters/API'
 import { dialog } from '@material-ui/core/Dialog'
 
 class LoginForm extends React.Component {

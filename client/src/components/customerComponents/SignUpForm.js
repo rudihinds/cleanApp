@@ -1,5 +1,5 @@
 import React from 'react'
-import API from '../adapters/API'
+import API from '../../adapters/API'
 
 class SignUpForm extends React.Component {
   state = {

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import API from '../adapters/API'
+import API from '../../adapters/API'
 import LoginControl from './LoginControl'
 import { NavLink } from 'react-router-dom'
 import SignUpButton from './SignUpButton';

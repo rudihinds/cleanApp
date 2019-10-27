@@ -1,22 +1,17 @@
 class Api::V1::AuthController < ApplicationController
-    skip_before_action :authorize, only: [:create, :validate]
+    
+    skip_before_action :authorize, only: [:create]
   
     def create
-   
-        
         user = User.find_by(email: user_login_params[:email])
-        
         if user && user.authenticate(user_login_params[:password])
             render json: { user: user, token: issue_token(user_id: user.id) }, status: :accepted
         else
-            # render json: { errors: ['Invalid user or password'] }, status: :unauthorized
             render json: { errors: user.errors.full_messages }, status: :unauthorized
-
         end
     end
   
     def validate
-        
         user = @current_user
         if user
             render json: { user: user, token: issue_token(user_id: user.id) }, status: :accepted
