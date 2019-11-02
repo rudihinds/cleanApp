@@ -33,13 +33,11 @@ class App extends React.Component{
     ratingFilterRange: [],
     minimumCleansFilterRange: []
   }
-  
-
 
   componentDidMount(){
 
     API.validateUser().then(user => {
-      if (!user.error && user.id) this.setState({userLoggedIn: true, currentUser: user})
+      if (user && !user.error) this.setState({userLoggedIn: true, currentUser: user})
     })
 
 
@@ -64,6 +62,7 @@ class App extends React.Component{
           minimumCleansFilterRange: [1, 50]
          })
       })
+      .catch(error => console.log(error))
       // if (this.state.pricefilterRange === [] && this.state.pricefilterRange === [] && this.state.pricefilterRange === []) {
         // this.setState({  
         //   priceFilterRange: [12, 20], 
@@ -160,6 +159,7 @@ class App extends React.Component{
     
     const bookingRequestTimeRange = moment.range(rangeArray)
 
+    // this needs some kind of user flash message if its not intuitive similar to below
     requestRange.overlaps(bookingRequestTimeRange) ? console.log("it overlaps, choose another time") : console.log("it doesn't overlap, book away!")
     
   }
@@ -181,10 +181,6 @@ class App extends React.Component{
       location: this.state.bookingRequirements.town
     }
     API.createCleaning(cleaning)
-    // console.log(cleaning)
-    // console.log(cleaning)
-    // console.log(newBooking)
-    // console.log(this.state.currentUser)
   }
 
   getFilteredCleaners = () => this.state.availableCleaners.filter(cleaner => {
@@ -198,10 +194,6 @@ class App extends React.Component{
    if ( (this.state.cleanings[0][0]) || !((this.state.cleanings[0][0]) === undefined )) {
 
     this.setState({
-      
-      // cleanings[0][0].address_one: [this.state.cleanings[0][0].address_one], [addressDetails.addressOne]
-      // cleanings: [this.state.cleanings[0][0].adress_two: addressDetails.addressTwo],
-      // cleanings: [this.state.cleanings[0][0].postcode: addressDetails.postcode],
 
       cleanings: Object.entries(this.state.cleanings[0][0]).reduce ((obj, arr) => {
         if ('address_one' === arr[0]) {
@@ -247,11 +239,7 @@ class App extends React.Component{
   })
   
   render(){
-    console.log(this.state.currentUser)
-
-    console.log(this.state.selectedCleaner)
-    // console.log(this.state.priceFilterRange, this.state.ratingFilterRange, this.state.minimumCleansFilterRange)
-
+    console.log(this.state)
     const filteredCleaners = this.getFilteredCleaners()
     let userLoggedIn = this.state.userLoggedIn
     let cleanersToRender = this.state.availableCleaners.filter(cleaner => this.state.cleanersToRender.includes(cleaner.id))

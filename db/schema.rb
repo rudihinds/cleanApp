@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_29_170319) do
+ActiveRecord::Schema.define(version: 2019_10_31_214748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(version: 2019_08_29_170319) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "stripe_user_id"
+    t.bigint "cleaner_id"
+    t.index ["cleaner_id"], name: "index_users_on_cleaner_id"
   end
 
   add_foreign_key "cleaners", "users"
@@ -101,4 +103,5 @@ ActiveRecord::Schema.define(version: 2019_08_29_170319) do
   add_foreign_key "customers", "users"
   add_foreign_key "reviews", "cleanings"
   add_foreign_key "reviews", "users"
+  add_foreign_key "users", "cleaners"
 end

@@ -13,6 +13,9 @@ Rails.application.routes.draw do
         post '/login', to: 'auth#create'
         get '/validate', to: 'auth#validate'
         get '/users/:id/cleanings', to: 'users#my_cleanings'
+        get '/cleaners/:id/get_this_months_earnings', to: 'cleaners#get_this_months_earnings'
+        get '/cleaners/:id/get_next_months_earnings', to: 'cleaners#get_next_months_earnings'
+        get '/cleaners/:id/get_last_months_earnings', to: 'cleaners#get_last_months_earnings'
         post '/stripe-account', to: 'stripe_account#create'
         get "stripe/connect", to: "stripe#connect", as: :stripe_connect
 

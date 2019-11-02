@@ -2,6 +2,7 @@ class Cleaner < ApplicationRecord
   has_many :cleanings
   has_many :reviews, through: :cleanings
   has_many :users, through: :cleanings
+  has_one :user
 
   def self.available(start_time, end_time)
     self.all.select{ |c| c.available(start_time, end_time) }
@@ -21,5 +22,42 @@ class Cleaner < ApplicationRecord
 
     !this_clashes_with_one_of_my_cleanings
   end
+
+  def self.this_months_earnings
+    # cleaner = Cleaner.find_by(id: @current_user.cleaner_id)
+    cleaner = Cleaner.find_by(id: 12)
+    my_cleanings = Cleaning.this_month_cleanings.select{|cleaning| cleaning.cleaner_id === cleaner.id }
+    earnings = my_cleanings.map{|clean| clean.total_cost }.reduce(0){|acc, num| acc+num }
+    earnings
+  end
+
+  def self.last_months_earnings
+    # cleaner = Cleaner.find_by(id: @current_user.cleaner_id)
+    cleaner = Cleaner.find_by(id: 12)
+    my_cleanings = Cleaning.last_month_cleanings.select{|cleaning| cleaning.cleaner_id === cleaner.id }
+    earnings = my_cleanings.map{|clean| clean.total_cost }.reduce(0){|acc, num| acc+num }
+    earnings
+  end
+
+  def self.next_months_earnings
+    # cleaner = Cleaner.find_by(id: @current_user.cleaner_id)
+    cleaner = Cleaner.find_by(id: 12)
+    my_cleanings = Cleaning.next_month_cleanings.select{|cleaning| cleaning.cleaner_id === cleaner.id }
+    earnings = my_cleanings.map{|clean| clean.total_cost }.reduce(0){|acc, num| acc+num }
+    earnings
+  end
+
+
+  # def self.next_month_cleanings
+  #   self.next_month_cleanings.where(cleaner_id: 12)
+  # end
+
+  # def self.last_month_cleanings
+  #   self.last_month_cleanings.where(cleaner_id: 12)
+  # end
+
+  # def total_earnings_in_month(cleanings)
+  #   cleanings.map{|clean| clean.total_cost }.reduce(0){|acc, num| acc+num }
+  # end
 
 end

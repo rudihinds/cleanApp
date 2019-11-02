@@ -18,5 +18,13 @@ code {
   flex-wrap: 'wrap';
   margin-left: '-32px';
   margin-right: 'auto';
+  background-color: lightgray;
+  padding: 10px 10px
 }
+
+.title {
+  margin: 0
+}
+
+
 

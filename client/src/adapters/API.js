@@ -33,7 +33,7 @@ const getUsers = () => {
 }
 
 const getCleaners = () => {
-    fetch(cleanersUrl, { headers: constructHeaders() })
+    return fetch(cleanersUrl, { headers: constructHeaders() })
     .then(resp => resp.json())
     .then(console.log)
 }

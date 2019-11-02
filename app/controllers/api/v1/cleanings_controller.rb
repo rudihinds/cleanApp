@@ -9,7 +9,6 @@ class Api::V1::CleaningsController < ApplicationController
 
     def create
         cleaning = Cleaning.create(cleaning_params)
-            
         if cleaning.valid?
             render json: cleaning
         else
