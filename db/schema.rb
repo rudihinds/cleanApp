@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_31_214748) do
+ActiveRecord::Schema.define(version: 2019_11_02_003030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,30 @@ ActiveRecord::Schema.define(version: 2019_10_31_214748) do
     t.index ["user_id"], name: "index_customers_on_user_id"
   end
 
+  create_table "offers", force: :cascade do |t|
+    t.integer "duration"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string "frequency"
+    t.integer "hourly_rate"
+    t.integer "total_cost"
+    t.string "location"
+    t.string "address_one"
+    t.string "adress_two"
+    t.string "postcode"
+    t.boolean "ironing"
+    t.boolean "windows"
+    t.boolean "oven"
+    t.boolean "accepted"
+    t.boolean "expired"
+    t.bigint "cleaner_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cleaner_id"], name: "index_offers_on_cleaner_id"
+    t.index ["user_id"], name: "index_offers_on_user_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "description"
@@ -101,6 +125,8 @@ ActiveRecord::Schema.define(version: 2019_10_31_214748) do
   add_foreign_key "cleanings", "reviews"
   add_foreign_key "cleanings", "users"
   add_foreign_key "customers", "users"
+  add_foreign_key "offers", "cleaners"
+  add_foreign_key "offers", "users"
   add_foreign_key "reviews", "cleanings"
   add_foreign_key "reviews", "users"
   add_foreign_key "users", "cleaners"

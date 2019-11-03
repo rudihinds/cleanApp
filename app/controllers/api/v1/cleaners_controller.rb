@@ -1,7 +1,14 @@
 class Api::V1::CleanersController < ApplicationController
     # skip_before_action :authorize
     # skip_before_action :authorize, only: [:available, :show]
-    skip_before_action :authorize, only: [:available, :show, :get_this_months_earnings, :get_next_months_earnings, :get_last_months_earnings]
+    skip_before_action :authorize, only: [
+        :available, 
+        :show, 
+        :get_this_months_earnings, 
+        :get_next_months_earnings, 
+        :get_last_months_earnings,
+        :available_offers
+    ]
 
 
     
@@ -43,6 +50,21 @@ class Api::V1::CleanersController < ApplicationController
             render json: { errors: earnings.errors.full_messages }, status: :not_accepted
         end
     end
+
+    def available_offers
+        # available_offers = @current_user.cleaner.get_available_offers
+        available_offers = Cleaner.find_by(id: 12).get_available_offers
+
+        if available_offers
+          render json: available_offers
+        else
+          render json: { errors: available_offers.errors.full_messages }, status: :not_accepted
+        end
+    end
+    
+    # def unavailable_offers
+    #     recently_expired_offers = get_recently_expired_offers
+    # end
 
     
 
